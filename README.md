@@ -1,3 +1,2 @@
 # supermariobros
 SUPER MARIO BROS
-THOMAS SMITH
