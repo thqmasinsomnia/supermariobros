@@ -28,7 +28,7 @@ def check_keyup_events(event, mario):
         mario.moving_left = False
 
 
-def update_screen(screen, boundries, mario):
+def  update_screen(screen, boundries, mario):
     screen.fill([0, 255, 0])
     mario.blitme()
     for bound in boundries:
