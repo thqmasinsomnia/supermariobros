@@ -22,10 +22,23 @@ def check_keydown_events(event, mario):
 
 
 def check_keyup_events(event, mario):
+    # if event.key == pygame.K_RIGHT:
+    #     mario.moving_right = False
+    # elif event.key == pygame.K_LEFT:
+    #     mario.moving_left = False
+
     if event.key == pygame.K_RIGHT:
         mario.moving_right = False
+        mario.stop_right()
     elif event.key == pygame.K_LEFT:
         mario.moving_left = False
+        mario.stop_left()
+
+    # if event.type == pygame.KEYUP:
+    #     if event.key == pygame.K_LEFT and mario.change_x < 0:
+    #         mario.stop()
+    #     if event.key == pygame.K_RIGHT and mario.change_x > 0:
+    #         mario.stop()
 
 
 def  update_screen(screen, boundries, mario):

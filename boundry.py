@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Boundry(Sprite):
 
     def __init__(self, x, y, width, height, screen):
@@ -8,7 +9,7 @@ class Boundry(Sprite):
         self.image = pygame.Surface((width, height)).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.image.fill([0,0,0])
+        self.image.fill([0, 0, 0])
         self.rect.y = y
         self.state = None
         self.screen = screen
