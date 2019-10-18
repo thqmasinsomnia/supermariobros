@@ -114,5 +114,8 @@ class Mario(Sprite):
         self.change_x = 0
         self.image = self.walking_frames_r[0]
 
+    def random_shit(self):
+        print("Hey")
+
 
 
