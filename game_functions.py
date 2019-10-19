@@ -19,6 +19,8 @@ def check_keydown_events(event, mario):
         mario.moving_left = True
     elif event.key == pygame.K_SPACE:
         mario.jump()
+    elif event.key == pygame.K_t:
+        mario.make_big()
 
 
 def check_keyup_events(event, mario):
