@@ -20,7 +20,7 @@ def check_keydown_events(event, mario):
     elif event.key == pygame.K_SPACE:
         mario.jump()
     elif event.key == pygame.K_t:
-        mario.make_big()
+        mario.mario_state()
 
 
 def check_keyup_events(event, mario):
@@ -43,9 +43,14 @@ def check_keyup_events(event, mario):
     #         mario.stop()
 
 
-def  update_screen(screen, boundries, mario):
+def  update_screen(screen, boundries, mario, goombas):
     screen.fill([0, 255, 0])
     mario.blitme()
     for bound in boundries:
         bound.blitme()
+    for bound in mario.big_bd:
+        bound.blitme()
+    for goomba in goombas:
+        goomba.mario_collision()
+        goomba.blitme()
     pygame.display.flip()
