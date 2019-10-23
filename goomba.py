@@ -6,12 +6,13 @@ from boundry import Boundry
 
 vec = pygame.math.Vector2
 
+
 class Goomba(Sprite):
     def __init__(self, x, y, screen, boundries, mario):
         super(Goomba, self).__init__()
         self.bd = boundries
         self.mario = mario
-        self.image = pygame.image.load('resources/graphics/goomba.png')
+        self.image = pygame.image.load('resources/graphics/goombaimgs/goomba1.png')
         self.rect = self.image.get_rect()
         self.center = float(self.rect.centerx)
         self.rect.x = x
@@ -20,7 +21,13 @@ class Goomba(Sprite):
         self.screen_rect = screen.get_rect()
         self.moving_left = False
         self.moving_right = True
-
+        self.dead = False
+        self.frames = [
+            pygame.image.load('resources/graphics/goombaimgs/goomba1.png'),
+            pygame.image.load('resources/graphics/goombaimgs/goomba2.png'),
+            pygame.image.load('resources/graphics/goombaimgs/goomba3.png'),
+        ]
+        self.walkcounter = 0;
 
     def update(self):
 
@@ -39,25 +46,52 @@ class Goomba(Sprite):
             self.moving_right = False
         self.rect.centerx = self.center
 
+        if self.walkcounter == 20:
+            self.image = pygame.image.load('resources/graphics/goombaimgs/goomba2.png')
+        elif self.walkcounter == 40:
+            self.image = pygame.image.load('resources/graphics/goombaimgs/goomba1.png')
+            self.walkcounter = 0
+
+        self.walkcounter += 1
+
+        if self.walkcounter == 120:
+            self.kill()
+
+        if self.rect.y > 1000:
+            self.kill()
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
-
     def mario_collision(self):
 
         col = False
+        oof = False
 
         print(self.rect.y)
         print(self.mario.rect.y)
+
         print("------------")
         if self.mario.is_big:
-            if self.mario.rect.y + 38 >= self.rect.y and self.mario.rect.x == self.rect.x:
+            if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
                 col = True
-        else:
-            col = pygame.sprite.collide_rect(self, self.mario)
+        elif not self.mario.is_big:
+            if self.rect.y >= self.mario.rect.y + 32 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
+                col = True
+
+        oof = pygame.sprite.collide_rect(self, self.mario)
 
         if col:
-            self.kill()
+            self.image = pygame.image.load('resources/graphics/goombaimgs/goomba3.png')
+            big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
+            pygame.mixer.Sound.play(big_sfx)
 
+            self.walkcounter = 100
+            self.moving_left = False
+            self.moving_right = False
+            self.dead = True
 
+        if not self.dead:
+                if oof:
+                    big_sfx = pygame.mixer.Sound("resources/sounds/pipe.ogg")
+                    pygame.mixer.Sound.play(big_sfx)

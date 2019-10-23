@@ -15,7 +15,7 @@ def run_mario():
     gf = game_functions;
 
 
-    screen = pygame.display.set_mode((500, 500))
+    screen = pygame.display.set_mode((1000, 1000))
     pygame.display.set_caption("SUPER MARIO BRUHS")
     screen.fill([0, 255, 0])
 

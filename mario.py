@@ -98,7 +98,7 @@ class Mario(Sprite):
 
         self.is_big = False
         self.image = pygame.image.load('resources/graphics/marioimgs/mario.png')
-        big_sfx = pygame.mixer.Sound("resources/audio/upgrade.ogg")
+        big_sfx = pygame.mixer.Sound("resources/sounds/pipe.ogg")
         pygame.mixer.Sound.play(big_sfx)
 
     def update(self):
