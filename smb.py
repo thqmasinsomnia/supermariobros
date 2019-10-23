@@ -12,7 +12,7 @@ clock = pygame.time.Clock()
 def run_mario():
     pygame.init()
 
-    gf = game_functions;
+    gf = game_functions
 
 
     screen = pygame.display.set_mode((1000, 1000))
