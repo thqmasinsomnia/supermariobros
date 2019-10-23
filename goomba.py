@@ -93,5 +93,6 @@ class Goomba(Sprite):
 
         if not self.dead:
                 if oof:
-                    big_sfx = pygame.mixer.Sound("resources/sounds/pipe.ogg")
-                    pygame.mixer.Sound.play(big_sfx)
+                    pygame.mixer.music.load('resources/audio/death.wav')
+                    pygame.mixer.music.play(1)
+                    self.mario.death_animation()

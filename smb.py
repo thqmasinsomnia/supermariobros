@@ -42,7 +42,7 @@ def run_mario():
 
     goombas = Group()
 
-    goombas.add(goomba1)
+
     goombas.add(goomba2)
 
     mario.blitme()
