@@ -45,7 +45,7 @@ def check_keyup_events(event, mario):
 
 
 def  update_screen(screen, boundries, mario, goombas, koopas):
-    screen.fill([0, 255, 0])
+   # screen.fill([0, 255, 0])
     mario.blitme()
     for bound in boundries:
         bound.blitme()

@@ -22,22 +22,22 @@ def run_mario():
     pygame.display.set_caption("SUPER MARIO BRUHS")
     # screen.fill([0, 255, 0])
 
-    ground = Boundry(0, 400, 1000, 200, screen, False)
-    plat1 = Boundry(0, 100, 100, 25, screen, False)
-    plat2 = Boundry(100, 200, 100, 25, screen, False)
-    plat3 = Boundry(200, 300, 100, 25, screen, False)
+    ground = Boundry(0, 450, 7571, 200, screen, True)
+    # plat1 = Boundry(0, 100, 100, 25, screen, False)
+    # plat2 = Boundry(100, 200, 100, 25, screen, False)
+    # plat3 = Boundry(200, 300, 100, 25, screen, False)
 
 
     ground.blitme()
 
-    pygame.display.flip()
+    #pygame.display.flip()
 
     plats = Group()
 
     plats.add(ground)
-    plats.add(plat1)
-    plats.add(plat2)
-    plats.add(plat3)
+    # plats.add(plat1)
+    # plats.add(plat2)
+    # plats.add(plat3)
 
     mario = Mario(100, 100, screen, plats)
 
@@ -63,7 +63,7 @@ def run_mario():
     active_sprite_list.add(mario)
 
     clock = pygame.time.Clock()
-    mario.blitme()
+  #  mario.blitme()
 
 
     while True:
