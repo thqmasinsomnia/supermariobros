@@ -21,6 +21,8 @@ def check_keydown_events(event, mario):
         mario.jump()
     elif event.key == pygame.K_t:
         mario.mario_state()
+    elif event.key == pygame.K_i:
+        mario.is_star = True
     elif event.key == pygame.K_DOWN:
         if not mario.injump:
             mario.crouch = True
