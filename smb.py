@@ -4,9 +4,12 @@ from mario import Mario
 import game_functions
 import sys
 from pygame.sprite import Group
+from levels import Levels
 from goomba import Goomba
+from green_koopa import Green_Koopa
 
-clock = pygame.time.Clock()
+
+# clock = pygame.time.Clock()
 
 
 def run_mario():
@@ -15,48 +18,89 @@ def run_mario():
     gf = game_functions;
 
 
-    screen = pygame.display.set_mode((1000, 1000))
+    screen = pygame.display.set_mode((500, 500))
     pygame.display.set_caption("SUPER MARIO BRUHS")
-    screen.fill([0, 255, 0])
+    # screen.fill([0, 255, 0])
 
-    ground = Boundry(0, 400, 500, 500, screen, False)
-    plat1 = Boundry(0, 100, 100, 25, screen, False)
-    plat2 = Boundry(100, 200, 100, 25, screen, False)
-    plat3 = Boundry(200, 300, 100, 25, screen, False)
+    ground = Boundry(0, 450, 7571, 200, screen, True)
+    # plat1 = Boundry(0, 100, 100, 25, screen, False)
+    # plat2 = Boundry(100, 200, 100, 25, screen, False)
+    # plat3 = Boundry(200, 300, 100, 25, screen, False)
+
 
     ground.blitme()
-    plat1.blitme()
-    pygame.display.flip()
+
+    #pygame.display.flip()
 
     plats = Group()
 
     plats.add(ground)
-    plats.add(plat1)
-    plats.add(plat2)
-    plats.add(plat3)
+    # plats.add(plat1)
+    # plats.add(plat2)
+    # plats.add(plat3)
 
     mario = Mario(100, 100, screen, plats)
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(100, 300, screen, plats, mario)
 
+
+
     goombas = Group()
+    green_koopas = Group()
+    koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas)
 
-    goombas.add(goomba1)
     goombas.add(goomba2)
+    green_koopas.add(koop1)
 
-    mario.blitme()
+    mario = Mario(0, 450, screen, plats)
+    #mario.blitme()
+
+    # Create all the levels
+    level = Levels(mario)
+
+    active_sprite_list = pygame.sprite.Group()
+    active_sprite_list.add(mario)
+
+    clock = pygame.time.Clock()
+  #  mario.blitme()
 
 
     while True:
-        clock.tick(120)
         gf.check_events(mario)
         mario.update()
+
+        #gf.update_screen(screen, boundries, mario)
+
+        # Update the player.
+        active_sprite_list.update()
+
+        # Update items in the level
+        #levels.update()
+        # If the player gets near the right side, shift the world left (-x)
+        if mario.rect.right >= 250:
+            diff = mario.rect.right - 250
+            mario.rect.right = 250
+            level.shift_world(-diff)
+
+        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+        level.draw(screen)
+        active_sprite_list.draw(screen)
+
+
+        clock.tick(60)
+
+        # Go ahead and update the screen with what we've drawn.
+        pygame.display.flip()
 
         for goomba in goombas:
             goomba.update()
 
-        gf.update_screen(screen, plats, mario, goombas)
+        for koopa in green_koopas:
+            koopa.update()
+
+        gf.update_screen(screen, plats, mario, goombas, green_koopas)
 
 
 run_mario()
+
