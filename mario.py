@@ -16,6 +16,8 @@ class Mario(Sprite):
         self.pos = vec(x, y)
         self.center = float(self.rect.centerx)
         self.screen_rect = screen.get_rect()
+        self.rect.x = x
+        self.rect.y = y
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
         self.injump = False
@@ -57,7 +59,7 @@ class Mario(Sprite):
         pos = self.rect.x
 
 
-        if self.moving_right and self.rect.right < self.screen_rect.right:
+        if self.moving_right and self.rect.right < 7571:
             self.center += 4
             frame = (pos // 30) % len(self.walking_frames_r)
             self.image = self.walking_frames_r[frame]
