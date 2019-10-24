@@ -15,7 +15,7 @@ from green_koopa import Green_Koopa
 def run_mario():
     pygame.init()
 
-    gf = game_functions;
+    gf = game_functions
 
 
     screen = pygame.display.set_mode((500, 500))
