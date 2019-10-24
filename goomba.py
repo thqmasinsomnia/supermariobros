@@ -68,10 +68,7 @@ class Goomba(Sprite):
         col = False
         oof = False
 
-        print(self.rect.y)
-        print(self.mario.rect.y)
 
-        print("------------")
         if self.mario.is_big:
             if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
                 col = True
@@ -82,17 +79,20 @@ class Goomba(Sprite):
         oof = pygame.sprite.collide_rect(self, self.mario)
 
         if col:
-            self.image = pygame.image.load('resources/graphics/goombaimgs/goomba3.png')
-            big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
-            pygame.mixer.Sound.play(big_sfx)
-
-            self.walkcounter = 100
-            self.moving_left = False
-            self.moving_right = False
-            self.dead = True
+            self.squish()
 
         if not self.dead:
-                if oof:
-                    pygame.mixer.music.load('resources/audio/death.wav')
-                    pygame.mixer.music.play(1)
-                    self.mario.death_animation()
+            if oof:
+                pygame.mixer.music.load('resources/audio/death.wav')
+                pygame.mixer.music.play(1)
+                self.mario.death_animation()
+
+    def squish(self):
+        self.image = pygame.image.load('resources/graphics/goombaimgs/goomba3.png')
+        big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
+        pygame.mixer.Sound.play(big_sfx)
+
+        self.walkcounter = 100
+        self.moving_left = False
+        self.moving_right = False
+        self.dead = True

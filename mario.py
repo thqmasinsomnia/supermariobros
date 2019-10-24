@@ -120,7 +120,7 @@ class Mario(Sprite):
                 self.rect.x += self.change_x
                 pos = self.rect.x
 
-                if self.moving_right and self.rect.right < self.screen_rect.right:
+                if self.moving_right and self.rect.right < 1000000:
                     self.center += 4
                     frame = (pos // 30) % len(self.walking_frames_r)
                     self.image = self.walking_frames_r[frame]
