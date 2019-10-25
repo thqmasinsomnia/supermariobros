@@ -19,8 +19,8 @@ class Green_Koopa(Sprite):
         self.center = float(self.rect.centerx)
         self.screen = screen
         self.screen_rect = screen.get_rect()
-        self.moving_left = False
-        self.moving_right = True
+        self.moving_left = True
+        self.moving_right = False
         self.dead = False
         self.grace = 0
         self.isshell = False
@@ -38,10 +38,15 @@ class Green_Koopa(Sprite):
         self.walkcounter = 0;
 
     def update(self):
+        print("Mario x" + str(self.mario.rect.y))
+        print("Koopa x" + str(self.rect.y))
+
+        if self.rect.y > 1000:
+            self.kill()
 
         if not self.isshell:
             hits = pygame.sprite.spritecollide(self, self.bd, False)
-            if self.moving_right and self.rect.right < self.screen_rect.right:
+            if self.moving_right and self.rect.right < 7000:
                 self.center += 1
             if self.moving_left and self.rect.left > 0:
                 self.center -= 1
@@ -50,7 +55,7 @@ class Green_Koopa(Sprite):
             if self.rect.left == 0:
                 self.moving_left = False
                 self.moving_right = True
-            if self.rect.right == self.screen_rect.right:
+            if self.rect.right > 7000:
                 self.moving_left = True
                 self.moving_right = False
             self.rect.centerx = self.center
@@ -78,7 +83,7 @@ class Green_Koopa(Sprite):
 
 
             hits = pygame.sprite.spritecollide(self, self.bd, False)
-            if self.moving_right and self.rect.right < self.screen_rect.right:
+            if self.moving_right and self.rect.right < 7000:
                 self.center += 4
             if self.moving_left and self.rect.left > 0:
                 self.center -= 4
@@ -87,7 +92,7 @@ class Green_Koopa(Sprite):
             if self.rect.left <= 0:
                 self.moving_left = False
                 self.moving_right = True
-            if self.rect.right+30 >= self.screen_rect.right:
+            if self.rect.x >= 7000:
                 self.moving_left = True
                 self.moving_right = False
             self.rect.centerx = self.center
@@ -102,12 +107,11 @@ class Green_Koopa(Sprite):
                 col = False
                 oof = False
 
-
                 if self.mario.is_big:
                     if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
                         col = True
                 elif not self.mario.is_big:
-                    if self.rect.y >= self.mario.rect.y + 32 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
+                    if self.rect.y >= self.mario.rect.y + 30 > self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < self.rect.x + 32:
                         col = True
 
                 oof = pygame.sprite.collide_rect(self, self.mario)
@@ -147,9 +151,10 @@ class Green_Koopa(Sprite):
 
     def goomba_collisions(self):
 
-        for goomba in self.goombas:
-            oof = pygame.sprite.collide_rect(self, goomba)
-            if oof:
-                goomba.squish()
+        if self.isshell:
+            for goomba in self.goombas:
+                oof = pygame.sprite.collide_rect(self, goomba)
+                if oof:
+                    goomba.squish()
 
 
