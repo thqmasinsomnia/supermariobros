@@ -21,4 +21,5 @@ class Boundry(Sprite):
             self.image.fill([0, 0, 0])
 
     def blitme(self):
+
         self.screen.blit(self.image, self.rect)
