@@ -54,7 +54,7 @@ def check_keyup_events(event, mario):
 
 
 
-def  update_screen(screen, boundries, mario, goombas, koopas):
+def  update_screen(screen, boundries, mario, goombas, koopas, fly):
    # screen.fill([0, 255, 0])
     mario.blitme()
     for bound in boundries:
@@ -68,4 +68,9 @@ def  update_screen(screen, boundries, mario, goombas, koopas):
         koopa.mario_collision()
         koopa.goomba_collisions()
         koopa.blitme()
+    for koopa in fly:
+        koopa.mario_collision()
+        koopa.goomba_collisions()
+        koopa.blitme()
+
     pygame.display.flip()

@@ -7,7 +7,7 @@ from pygame.sprite import Group
 from levels import Levels
 from goomba import Goomba
 from green_koopa import Green_Koopa
-
+from flying_koopa import Flying_Koopa
 
 # clock = pygame.time.Clock()
 
@@ -65,11 +65,13 @@ def run_mario():
 
     goombas = Group()
     green_koopas = Group()
+    fly_koop = Group()
     koop1 = Green_Koopa(500, 300, screen, plats, mario, goombas)
+    fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
 
     goombas.add(goomba2)
     green_koopas.add(koop1)
-
+    fly_koop.add(fly1)
 
     #mario.blitme()
 
@@ -119,7 +121,10 @@ def run_mario():
         for plat in plats:
             plat.blitme()
 
-        gf.update_screen(screen, plats, mario, goombas, green_koopas)
+        for koop in fly_koop:
+            koop.update()
+
+        gf.update_screen(screen, plats, mario, goombas, green_koopas, fly_koop)
 
 
 run_mario()
