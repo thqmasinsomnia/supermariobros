@@ -7,7 +7,7 @@ from boundry import Boundry
 
 #    pygame.image.load('resources/graphics/goombaimgs/green_koopa_shell.png'),
 class Green_Koopa(Sprite):
-    def __init__(self, x, y, screen, boundries, mario, goombas):
+    def __init__(self, x, y, screen, boundries, mario, goombas, koopas):
         super(Green_Koopa, self).__init__()
         self.bd = boundries
         self.goombas = goombas
@@ -25,6 +25,7 @@ class Green_Koopa(Sprite):
         self.grace = 0
         self.isshell = False
         self.movingshell = False
+        self.koopas = koopas
         self.frames_l = [
             pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_1.png'),
             pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_2.png')
@@ -118,6 +119,7 @@ class Green_Koopa(Sprite):
                     self.image = pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_shell.png')
                     big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
                     pygame.mixer.Sound.play(big_sfx)
+                    self.mario.score += 100
 
                     self.walkcounter = 100
                     self.moving_left = False
@@ -154,5 +156,6 @@ class Green_Koopa(Sprite):
                 oof = pygame.sprite.collide_rect(self, goomba)
                 if oof:
                     goomba.squish()
+
 
 

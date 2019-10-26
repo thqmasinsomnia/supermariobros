@@ -30,8 +30,6 @@ class Goomba(Sprite):
         self.walkcounter = 0;
 
     def update(self):
-        print("MARIO X " + str(self.mario.rect.y))
-        print(self.rect.y)
         hits = pygame.sprite.spritecollide(self, self.bd, False)
         if self.moving_right and self.rect.right < 7000:
             self.center += 1
@@ -92,6 +90,7 @@ class Goomba(Sprite):
         self.image = pygame.image.load('resources/graphics/goombaimgs/goomba3.png')
         big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
         pygame.mixer.Sound.play(big_sfx)
+        self.mario.score += 100
 
         self.walkcounter = 100
         self.moving_left = False

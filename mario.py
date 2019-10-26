@@ -10,6 +10,8 @@ class Mario(Sprite):
     def __init__(self, x, y, screen, boundries):
         super(Mario, self).__init__()
         self.moving_right = False
+        self.score = 0
+        self.lives = 3
         self.bd = boundries
         self.screen = screen
         self.moving_left = False
