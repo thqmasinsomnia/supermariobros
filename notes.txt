@@ -1,0 +1,7 @@
+pipe width = 1000 - 1070
+
+heights  3 types of heights
+
+short = 445 - 375
+medium = 445 - 340
+longest = 445 - 305
