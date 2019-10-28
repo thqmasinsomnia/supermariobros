@@ -26,6 +26,8 @@ class Mario(Sprite):
         self.big_bd = Group()
         self.crouch = False
         self.is_lit = False
+        self.facing_right = False
+        self.facing_left = False
 
         for bnd in self.bd:
             x = Boundry(bnd.rect.x, bnd.rect.y - 34, bnd.width, bnd.height, self.screen, True)
@@ -177,8 +179,10 @@ class Mario(Sprite):
                 if self.jumpcount == 50:
                     self.injump = False
                     self.jumpcount = 0
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario.png')
-
+                    if self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/marioL.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario.png')
             if not self.injump:
                 for bnd in self.bd:
                     col = pygame.sprite.collide_rect(self, bnd)
@@ -219,18 +223,19 @@ class Mario(Sprite):
                 if self.jumpcount == 50:
                     self.injump = False
                     self.jumpcount = 0
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
-
+                    if self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1L.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
             if not self.injump:
                 for bnd in self.big_bd:
                     col = pygame.sprite.collide_rect(self, bnd)
                     if col:
                         self.rect.y = bnd.rect.y - 30
             if self.crouch:
-                if self.image == li[0]:
-                    print("facing right\n")
+                if self.facing_right:
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_r.png')
-                else:
+                elif self.facing_left:
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_l.png')
         # Fire Mario
         if self.is_big and self.is_lit:
@@ -266,7 +271,10 @@ class Mario(Sprite):
                 if self.jumpcount == 50:
                     self.injump = False
                     self.jumpcount = 0
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
+                    if self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2L.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
 
             if not self.injump:
                 for bnd in self.big_bd:
@@ -274,9 +282,9 @@ class Mario(Sprite):
                     if col:
                         self.rect.y = bnd.rect.y - 30
             if self.crouch:
-                if self.image == li[1]:
+                if self.facing_right:
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_r.png')
-                else:
+                elif self.facing_left:
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_l.png')
 
     def jump(self):
@@ -291,21 +299,30 @@ class Mario(Sprite):
                 self.injump = True
                 jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
                 pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario_jump.png')
+                if self.facing_left:
+                    self.image = pygame.image.load('resources/graphics/marioimgs/marioL_jump.png')
+                else:
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario_jump.png')
         elif self.is_big and not self.is_lit:
             if on_big_plat:
                 print("big jump!")
                 self.injump = True
                 jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
                 pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
+                if self.facing_left:
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1L_jump.png')
+                else:
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
         else:
             if on_big_plat:
                 print("lit jump")
                 self.injump = True
                 jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
                 pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
+                if self.facing_left:
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2L_jump.png')
+                else:
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
 
     def stop_left(self):
         # Called when the user lets off the keyboard and sets sprite to stance
