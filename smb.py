@@ -7,10 +7,8 @@ from pygame.sprite import Group
 from levels import Levels
 from goomba import Goomba
 from green_koopa import Green_Koopa
-from red_koopa import Red_Koopa
-from flying_koopa import Flying_Koopa
-from red_flying_koopa import Red_Flying_Koopa
-from coin import Coin
+from blocks import Blocks
+
 
 # clock = pygame.time.Clock()
 
@@ -21,70 +19,50 @@ def run_mario():
     gf = game_functions
 
 
-
     screen = pygame.display.set_mode((500, 500))
     pygame.display.set_caption("SUPER MARIO BRUHS")
     # screen.fill([0, 255, 0])
-    plats = Group()
-    ground = Boundry(0, 450, 2469, 200, screen, True)
-    ground2 = Boundry(2534, 450, 536, 200, screen, True)
-    ground3 = Boundry(3178, 450, 2285, 200, screen, True)
-    ground4 = Boundry(5536, 450, 2034, 200, screen, True)
 
-    stairset1 = Boundry(4784, 408, 144, 36, screen, True)
-    stairset2 = Boundry(4827, 375, 101, 36, screen, True)
-    stairset3 = Boundry(4856, 338, 72, 36, screen, True)
-    stairset4 = Boundry(4892, 303, 36, 36, screen, True)
-
-    plat1 = Boundry(0, 100, 100, 25, screen, False)
+    ground = Boundry(0, 450, 7571, 200, screen, True)
+    # plat1 = Boundry(0, 100, 100, 25, screen, False)
     # plat2 = Boundry(100, 200, 100, 25, screen, False)
     # plat3 = Boundry(200, 300, 100, 25, screen, False)
-    plats.add(plat1)
-    # plats.add(plat2)
-    # plats.add(plat3)
 
-    plats.add(ground)
-    plats.add(ground2)
-    plats.add(ground3)
-    plats.add(ground4)
-
-    plats.add(stairset1)
-    plats.add(stairset2)
-    plats.add(stairset3)
-    plats.add(stairset4)
+    block = Blocks(screen, 256, 236, 32, 32, True)
 
 
+    ground.blitme()
+    block.blitme()
 
     #pygame.display.flip()
 
+    plats = Group()
+    blocks = Group()
 
 
 
-    mario = Mario(0, 400, screen, plats)
+    plats.add(ground)
+    # plats.add(plat1)
+    # plats.add(plat2)
+    # plats.add(plat3)
+
+    blocks.add(block)
+
+    mario = Mario(100, 100, screen, plats)
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
-    goomba2 = Goomba(200, 400, screen, plats, mario)
+    goomba2 = Goomba(100, 300, screen, plats, mario)
 
 
 
     goombas = Group()
-
-    koops = Group()
-
-    koop1 = Green_Koopa(500, 300, screen, plats, mario, goombas, koops)
-    fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
-    redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
-    koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
-
-
-    koops.add(koop1)
-    koops.add(koop2)
-    koops.add(fly1)
-    koops.add(redfly1)
+    green_koopas = Group()
+    koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas, green_koopas)
 
     goombas.add(goomba2)
+    green_koopas.add(koop1)
 
-
+    mario = Mario(0, 450, screen, plats)
     #mario.blitme()
 
     # Create all the levels
@@ -96,10 +74,6 @@ def run_mario():
     clock = pygame.time.Clock()
   #  mario.blitme()
 
-    coin1 = Coin(200, 300, screen, plats, mario)
-    coins = Group()
-
-    coins.add(coin1)
 
     while True:
         gf.check_events(mario)
@@ -131,18 +105,14 @@ def run_mario():
         for goomba in goombas:
             goomba.update()
 
-        for plat in plats:
-            plat.blitme()
+        for koopa in green_koopas:
+            koopa.update()
 
-        for koop in koops:
-            koop.update()
+        for block in blocks:
+            block.update()
 
-        for coin in coins:
-            coin.update()
-
+        gf.update_screen(screen, plats, mario, goombas, green_koopas, blocks)
 
 
-        gf.update_screen(screen, plats, mario, goombas, koops, coins)
-        print("MARIO SCORE: " + str(mario.score))
 run_mario()
 
