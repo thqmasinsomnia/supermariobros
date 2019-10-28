@@ -1,18 +1,16 @@
 import pygame
 from pygame.sprite import Sprite
-from mario import Mario
-from pygame.sprite import Group
-from boundry import Boundry
+
 
 
 #    pygame.image.load('resources/graphics/goombaimgs/green_koopa_shell.png'),
-class Green_Koopa(Sprite):
-    def __init__(self, x, y, screen, boundries, mario, goombas, koopas):
-        super(Green_Koopa, self).__init__()
+class Red_Koopa(Sprite):
+    def __init__(self, x, y, screen, boundries, mario, goombas):
+        super(Red_Koopa, self).__init__()
         self.bd = boundries
         self.goombas = goombas
         self.mario = mario
-        self.image = pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_1.png')
+        self.image = pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_1.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -25,15 +23,14 @@ class Green_Koopa(Sprite):
         self.grace = 0
         self.isshell = False
         self.movingshell = False
-        self.koopas = koopas
         self.frames_l = [
-            pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_1.png'),
-            pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_2.png')
+            pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_1.png'),
+            pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_2.png')
         ]
         self.frames_r = [
-            pygame.transform.flip(pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_1.png'), True,
+            pygame.transform.flip(pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_1.png'), True,
                                   False),
-            pygame.transform.flip(pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_2.png'), True,
+            pygame.transform.flip(pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_2.png'), True,
                                   False)
         ]
         self.walkcounter = 0;
@@ -45,6 +42,17 @@ class Green_Koopa(Sprite):
 
         if not self.isshell:
             hits = pygame.sprite.spritecollide(self, self.bd, False)
+
+            for plat in self.bd:
+                onplat = pygame.sprite.collide_rect(self, plat)
+                if onplat:
+                    if plat.rect.right == self.rect.right:
+                        self.moving_left = True
+                        self.moving_right = False
+                    elif plat.rect.left == self.rect.left:
+                        self.moving_left = False
+                        self.moving_right = True
+
             if self.moving_right and self.rect.right < 7000:
                 self.center += 1
             if self.moving_left and self.rect.left > 0:
@@ -116,7 +124,7 @@ class Green_Koopa(Sprite):
                 oof = pygame.sprite.collide_rect(self, self.mario)
 
                 if col:
-                    self.image = pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_shell.png')
+                    self.image = pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_shell.png')
                     big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
                     pygame.mixer.Sound.play(big_sfx)
                     self.mario.score += 100
@@ -156,6 +164,4 @@ class Green_Koopa(Sprite):
                 oof = pygame.sprite.collide_rect(self, goomba)
                 if oof:
                     goomba.squish()
-
-
 

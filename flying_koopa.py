@@ -1,14 +1,10 @@
 import pygame
 from pygame.sprite import Sprite
-from mario import Mario
-from pygame.sprite import Group
-from boundry import Boundry
-
 
 #    pygame.image.load('resources/graphics/goombaimgs/green_koopa_shell.png'),
-class Green_Koopa(Sprite):
-    def __init__(self, x, y, screen, boundries, mario, goombas, koopas):
-        super(Green_Koopa, self).__init__()
+class Flying_Koopa(Sprite):
+    def __init__(self, x, y, screen, boundries, mario, goombas):
+        super(Flying_Koopa, self).__init__()
         self.bd = boundries
         self.goombas = goombas
         self.mario = mario
@@ -25,21 +21,24 @@ class Green_Koopa(Sprite):
         self.grace = 0
         self.isshell = False
         self.movingshell = False
-        self.koopas = koopas
+        self.injump = False
+        self.jumpcount = 0
         self.frames_l = [
-            pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_1.png'),
-            pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_2.png')
+            pygame.image.load('resources/graphics/flying_koopaimgs/fly_koopa_1.png'),
+            pygame.image.load('resources/graphics/flying_koopaimgs/fly_koopa_2.png')
         ]
         self.frames_r = [
-            pygame.transform.flip(pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_1.png'), True,
+            pygame.transform.flip(pygame.image.load('resources/graphics/flying_koopaimgs/fly_koopa_2.png'), True,
                                   False),
-            pygame.transform.flip(pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_2.png'), True,
+            pygame.transform.flip(pygame.image.load('resources/graphics/flying_koopaimgs/fly_koopa_2.png'), True,
                                   False)
         ]
         self.walkcounter = 0;
 
     def update(self):
 
+        self.jump()
+        self.jumpdate()
         if self.rect.y > 1000:
             self.kill()
 
@@ -59,19 +58,20 @@ class Green_Koopa(Sprite):
                 self.moving_right = False
             self.rect.centerx = self.center
 
-            if self.moving_left == True:
+            if self.moving_left:
                 if self.walkcounter == 20:
                     self.image = self.frames_l[0]
                 elif self.walkcounter == 40:
                     self.image = self.frames_l[1]
                     self.walkcounter = 0
 
-            if self.moving_right == True:
+            if self.moving_right:
                 if self.walkcounter == 20:
                     self.image = self.frames_r[0]
                 elif self.walkcounter == 40:
                     self.image = self.frames_r[1]
                     self.walkcounter = 0
+
 
             self.walkcounter += 1
 
@@ -142,7 +142,6 @@ class Green_Koopa(Sprite):
                 self.movingshell = True
                 self.moving_left = True
 
-
             if oof and self.movingshell and self.grace > 20:
                 pygame.mixer.music.load('resources/audio/death.wav')
                 pygame.mixer.music.play(1)
@@ -159,3 +158,23 @@ class Green_Koopa(Sprite):
 
 
 
+
+    def jump(self):
+        self.rect.x += 1
+        on_plat = pygame.sprite.spritecollide(self, self.bd, False)
+        self.rect.x +=1
+
+        if not self.isshell and not self.injump:
+            if on_plat:
+                self.injump = True
+
+    def jumpdate(self):
+        if self.injump:
+            if self.jumpcount < 30:
+                self.rect.y -= 7
+                self.jumpcount += 1
+            if 25 <= self.jumpcount < 60:
+                self.jumpcount += 1
+            if self.jumpcount == 60:
+                self.injump = False
+                self.jumpcount = 0
