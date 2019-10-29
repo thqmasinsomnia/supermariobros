@@ -1,4 +1,6 @@
 import pygame
+from coin import Coin
+from flag import Flag
 
 # Colors
 BLACK    = (   0,   0,   0)
@@ -7,20 +9,25 @@ BLUE     = (   0,   0, 255)
 
 
 class Levels:
-    def __init__(self, player):
+    def __init__(self, mario):
         # Lists of sprites used in all levels
         self.platform_list = None
         self.enemy_list = None
-        # self.img = pygame.image.load("resources/graphics/level_1.png").convert()
-        # self.background = pygame.transform.scale(self.img, (3392, 500))
         self.background = pygame.image.load("resources/graphics/level_one.png").convert()
+
 
         # How far this world has been scrolled left/right
         self.world_shift = 0
         self.level_limit = -3300
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
-        self.player = player
+        self.mario = mario
+
+        #add flags to a group
+        self.flag = Flag(700, 200, 32, 32)
+        self.platform_list.add(self.flag)
+
+
 
     # Update everything on this level
     def update(self):
@@ -47,11 +54,12 @@ class Levels:
 
         # Keep track of the shift amount
         self.world_shift = shift_x
-        print(self.world_shift)
+        print("world shift: ", self.world_shift)
+
 
         # Go through all the sprite lists and shift
         for platform in self.platform_list:
-            platform.rect.x += shift_x
+            platform.rect.x = shift_x
 
         for enemy in self.enemy_list:
-            enemy.rect.x += shift_x
+            enemy.rect.x = shift_x

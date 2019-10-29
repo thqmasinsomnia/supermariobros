@@ -2,6 +2,9 @@ import pygame
 from pygame.sprite import Sprite
 from pygame.sprite import Group
 from boundry import Boundry
+from levels import Levels
+from flag import Flag
+import sys
 
 vec = pygame.math.Vector2
 
@@ -13,6 +16,7 @@ class Mario(Sprite):
         self.score = 0
         self.lives = 3
         self.bd = boundries
+        # self.flg = flags
         self.screen = screen
         self.moving_left = False
         self.image = pygame.image.load('resources/graphics/marioimgs/mario.png')
@@ -28,6 +32,7 @@ class Mario(Sprite):
         self.jumpcount = 0
         self.is_big = False
         self.big_bd = Group()
+        # self.flag_group = Group()
         self.lives = 3
         self.deathcount = 0
         self.hit = False
@@ -36,9 +41,14 @@ class Mario(Sprite):
         self.is_lit = False
 
 
+
         for bnd in self.bd:
             x = Boundry(bnd.rect.x, bnd.rect.y - 34, bnd.width, bnd.height, self.screen, True)
             self.big_bd.add(x)
+
+        # for flag in self.flg:
+        #     x = Flag(flag.rect.x, flag.rect.y - 34, flag.width, flag.height, self.screen)
+        #     self.flag_group.add(x)
 
         """Mario animation sprite lists for L and R"""
         self.change_x = 0;
@@ -245,16 +255,23 @@ class Mario(Sprite):
         self.moving_left = False
 
 
+
+
     def small_mario(self):
         if not self.is_big and not self.is_lit:
             hits = pygame.sprite.spritecollide(self, self.bd, False)
             self.rect.x += self.change_x
             pos = self.rect.x
 
-            if self.moving_right and self.rect.right < self.screen_rect.right:
+            if self.moving_right and self.rect.right < 7100:
                 self.center += 4
                 frame = (pos // 30) % len(self.walking_frames_r)
                 self.image = self.walking_frames_r[frame]
+
+                """This part could be used to interact with the flag and make the game end"""
+                if self.center == 7068:
+                    sys.exit()
+
             if self.moving_left and self.rect.left > 0:
                 self.center -= 4
                 frame = (pos // 30) % len(self.walking_frames_l)
@@ -262,6 +279,7 @@ class Mario(Sprite):
             if not hits:
                 self.rect.centery += 4
             self.rect.centerx = self.center
+            print("Mario pos:", self.rect.centerx)
 
             if self.injump:
                 if self.jumpcount > 2:
@@ -296,7 +314,7 @@ class Mario(Sprite):
         self.rect.x += self.change_x
         pos = self.rect.x
 
-        if self.moving_right and self.rect.right < self.screen_rect.right:
+        if self.moving_right and self.rect.right < 7100:
             self.center += 4
             frame = (pos // 30) % len(self.big_walking_frames_r)
             self.image = self.big_walking_frames_r[frame]
@@ -349,7 +367,7 @@ class Mario(Sprite):
         self.rect.x += self.change_x
         pos = self.rect.x
 
-        if self.moving_right and self.rect.right < self.screen_rect.right:
+        if self.moving_right and self.rect.right < 7100:
             self.center += 4
             frame = (pos // 30) % len(self.lit_walking_frames_r)
             self.image = self.lit_walking_frames_r[frame]

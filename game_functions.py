@@ -71,6 +71,8 @@ def  update_screen(screen, boundries, mario, goombas,koops, coins):
     for coin in coins:
         coin.mario_collision()
         coin.blitme()
+    # for flag in flags:
+    #     flag.blitme()
 
 
 
