@@ -54,9 +54,13 @@ def check_keyup_events(event, mario):
 
 
 
-def  update_screen(screen, boundries, mario, goombas, koopas):
+def  update_screen(screen, boundries, mario, goombas, koopas, pipelist):
    # screen.fill([0, 255, 0])
     mario.blitme()
+    # for pipe in pipelist:
+    #     pipe.blitme()
+    # pipelist.blitme()
+
     for bound in boundries:
         bound.blitme()
     for bound in mario.big_bd:

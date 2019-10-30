@@ -7,6 +7,8 @@ from pygame.sprite import Group
 from levels import Levels
 from goomba import Goomba
 from green_koopa import Green_Koopa
+from pipe import Pipe
+
 
 
 # clock = pygame.time.Clock()
@@ -65,11 +67,21 @@ def run_mario():
     clock = pygame.time.Clock()
   #  mario.blitme()
 
+    # Create the pipes
+    pipe0 = Pipe('short', 100, screen)
+    pipe1 = Pipe('short', 1035, screen)
+    pipe2  = Pipe('medium', 1393, screen)
+    pipe3 = Pipe('long', 1678, screen)
+    pipe4 = Pipe('long', 2071, screen)
+    pipe5 = Pipe('short', 5857, screen)
+    pipe6 = Pipe('short', 6427, screen)
+
+    # pipelist = [pipe1, pipe2, pipe3, pipe4, pipe5, pipe6]
 
     while True:
         gf.check_events(mario)
         mario.update()
-
+        pipe1.blitme()
         #gf.update_screen(screen, boundries, mario)
 
         # Update the player.
@@ -84,13 +96,13 @@ def run_mario():
             level.shift_world(-diff)
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-        level.draw(screen)
+        level.draw(screen, pipe1)
         active_sprite_list.draw(screen)
 
 
         clock.tick(60)
 
-        # Go ahead and update the screen with what we've drawn.
+        # Go ahead and update the screen with what we've draw.
         pygame.display.flip()
 
         for goomba in goombas:
@@ -99,7 +111,10 @@ def run_mario():
         for koopa in green_koopas:
             koopa.update()
 
-        gf.update_screen(screen, plats, mario, goombas, green_koopas)
+        gf.update_screen(screen, plats, mario, goombas, green_koopas, pipe0)
+        print("Mario center is {}, his dist_traveled is {}".format(mario.center, mario.dist_from_origin))
+        if mario.dist_from_origin >= 1030:
+            print("reached it")
 
 
 run_mario()

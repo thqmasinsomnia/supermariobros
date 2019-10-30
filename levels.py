@@ -1,4 +1,5 @@
 import pygame
+from pipe import Pipe
 
 # Colors
 BLACK    = (   0,   0,   0)
@@ -11,6 +12,7 @@ class Levels:
         # Lists of sprites used in all levels
         self.platform_list = None
         self.enemy_list = None
+        self.pipe_list = None
         # self.img = pygame.image.load("resources/graphics/level_1.png").convert()
         # self.background = pygame.transform.scale(self.img, (3392, 500))
         self.background = pygame.image.load("resources/graphics/level_one.png").convert()
@@ -20,6 +22,7 @@ class Levels:
         self.level_limit = -3300
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
+        self.pipe_list = pygame.sprite.Group()
         self.player = player
 
     # Update everything on this level
@@ -27,8 +30,9 @@ class Levels:
         # Update everything
         self.platform_list.update()
         self.enemy_list.update()
+        self.pipe_list()
 
-    def draw(self, screen):
+    def draw(self, screen, pipe):
         """ Draw everything on this level. """
 
         # Draw the background
@@ -37,10 +41,19 @@ class Levels:
         screen.fill(BLUE)
         screen.blit(self.background, (self.world_shift, 0))
 
+        pipe1 = Pipe('short', 1035, screen)
+        pipe2 = Pipe('medium', 1393, screen)
+        pipe3 = Pipe('long', 1678, screen)
+        pipe4 = Pipe('long', 2071, screen)
+        pipe5 = Pipe('short', 5857, screen)
+        pipe6 = Pipe('short', 6427, screen)
+
+
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
+        self.pipe_list.draw(screen)
 
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """

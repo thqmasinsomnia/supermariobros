@@ -11,7 +11,7 @@ class Pipe(Sprite):
         self.type = type
         self.screen = screen
         # use blank sprite for pipe sprite
-        self.rectangle = pygame.image.load('resources/graphics/nothing.png')
+        self.rectangle = pygame.image.load('resources/graphics//goombaimgs/goomba1.png')
         self.rectangle_rect = self.rectangle.get_rect()
 
         # if type is short
@@ -29,6 +29,13 @@ class Pipe(Sprite):
 
         # resize the blank sprite
         self.rectangle = pygame.transform.scale(self.rectangle, (self.width, self.height))
+
+        # Place the rect on the screen
+        self.rectangle_rect.midbottom = (cent_x, 445 - (self.height / 2))
+
+
+
+
     # We can land on the pipe sprite
     # def mario_is_on_top(self, mario):
     #     pass
@@ -48,4 +55,4 @@ class Pipe(Sprite):
 
 
     def blitme(self):
-        self.screen.blit(self.image, self.rectangle_rect)
+        self.screen.blit(self.rectangle, self.rectangle_rect)

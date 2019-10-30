@@ -1,7 +1,30 @@
-pipe width = 1000 - 1070
+pipe width = 1000 - 1070 = 70
+70/2 = 35
+
 
 heights  3 types of heights
 
 short = 445 - 375
 medium = 445 - 340
 longest = 445 - 305
+
+y is 445
+small - 1035
+medium - 1393
+large - 1678
+large - 2071
+small - 5857
+small - 6427
+
+
+first pipe
+left = 1000
+right = about 1070
+
+second pipe
+left = about 1364
+right = about 1424
+
+third pipe
+left = about 1648
+

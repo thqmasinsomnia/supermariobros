@@ -24,14 +24,15 @@ class Mario(Sprite):
         self.acc = vec(0, 0)
         self.injump = False
         self.jumpcount = 0
-        self.is_big = False
+        self.is_big = False  #Is big
         self.big_bd = Group()
         self.lives = 3
         self.deathcount = 0
         self.hit = False
         self.pitdeath = False
         self.crouch = False
-        self.is_lit = False
+        self.is_lit = False  # Is fire
+        self.dist_from_origin = 16
 
 
         for bnd in self.bd:
@@ -110,9 +111,9 @@ class Mario(Sprite):
         # set initial walking/stance frame
         self.image = self.walking_frames_r[0]
 
-
     def blitme(self):
         self.screen.blit(self.image, self.rect)
+
     def mario_state(self):
         if self.is_big and not self.is_lit:
             self.make_lit()
@@ -163,14 +164,17 @@ class Mario(Sprite):
             if not self.is_big and not self.is_lit:
                 hits = pygame.sprite.spritecollide(self, self.bd, False)
                 self.rect.x += self.change_x
+                self.dist_from_origin += self.change_x
                 pos = self.rect.x
 
                 if self.moving_right and self.rect.right < self.screen_rect.right:
                     self.center += 4
+                    self.dist_from_origin += 4
                     frame = (pos // 30) % len(self.walking_frames_r)
                     self.image = self.walking_frames_r[frame]
                 if self.moving_left and self.rect.left > 0:
                     self.center -= 4
+                    self.dist_from_origin -= 4
                     frame = (pos // 30) % len(self.walking_frames_l)
                     self.image = self.walking_frames_l[frame]
                 if not hits:
@@ -202,14 +206,17 @@ class Mario(Sprite):
                 if self.is_big:
                     hits = pygame.sprite.spritecollide(self, self.big_bd, False)
                     self.rect.x += self.change_x
+                    self.dist_from_origin += self.change_x
                     pos = self.rect.x
 
                     if self.moving_right and self.rect.right < self.screen_rect.right:
                         self.center += 4
+                        self.dist_from_origin += 4
                         frame = (pos // 30) % len(self.big_walking_frames_r)
                         self.image = self.big_walking_frames_r[frame]
                     if self.moving_left and self.rect.left > 0:
                         self.center -= 4
+                        self.dist_from_origin -= 4
                         frame = (pos // 30) % len(self.big_walking_frames_l)
                         self.image = self.big_walking_frames_l[frame]
                     if not hits:
@@ -243,14 +250,17 @@ class Mario(Sprite):
             if self.is_big and not self.is_lit:
                 hits = pygame.sprite.spritecollide(self, self.big_bd, False)
                 self.rect.x += self.change_x
+                self.dist_from_origin += self.change_x
                 pos = self.rect.x
 
                 if self.moving_right and self.rect.right < self.screen_rect.right:
                     self.center += 4
+                    self.dist_from_origin += 4
                     frame = (pos // 30) % len(self.big_walking_frames_r)
                     self.image = self.big_walking_frames_r[frame]
                 if self.moving_left and self.rect.left > 0:
                     self.center -= 4
+                    self.dist_from_origin -= 4
                     frame = (pos // 30) % len(self.big_walking_frames_l)
                     self.image = self.big_walking_frames_l[frame]
                 if not hits:
@@ -365,9 +375,11 @@ class Mario(Sprite):
 
     def jump(self):
         self.rect.x += 1
+        self.dist_from_origin += 1
         on_plat = pygame.sprite.spritecollide(self, self.bd, False)
         on_big_plat = pygame.sprite.spritecollide(self, self.big_bd, False)
         self.rect.x += 1
+        self.dist_from_origin += 1
 
         if not self.is_big and not self.is_lit:
             if on_plat:
@@ -419,3 +431,7 @@ class Mario(Sprite):
         self.image = pygame.image.load('resources/graphics/marioimgs/mario_death.png')
         self.moving_right = False
         self.moving_left = False
+
+
+    def check_for_pipe(self):
+        pass
