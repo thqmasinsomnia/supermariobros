@@ -87,7 +87,7 @@ def run_mario():
     koop1 = Green_Koopa(1000, 300, screen, plats, mario, goombas, koops)
     fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
     redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
-    koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
+    koop2 = Red_Koopa(700, 300, screen, plats, mario, goombas)
 
 
 

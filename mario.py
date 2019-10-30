@@ -15,6 +15,7 @@ class Mario(Sprite):
         self.moving_right = False
         self.score = 0
         self.lives = 3
+        self.reset_x = 0
         self.bd = boundries
         # self.flg = flags
         self.screen = screen
@@ -249,6 +250,7 @@ class Mario(Sprite):
 
     def death_animation(self):
 
+        self.reset_x = self.rect.x
         self.hit = True
         self.image = pygame.image.load('resources/graphics/marioimgs/mario_death.png')
         self.moving_right = False
@@ -428,4 +430,12 @@ class Mario(Sprite):
     def wall_col(self):
         for bound in self.bd:
             if self.rect.right == bound.rect.left:
-                self.moving_right = False
+                if self.rect.y + 30 > bound.rect.y:
+                    self.moving_right = False
+
+
+    def reset(self):
+        self.lives -= 1
+        self.rect.x = self.reset_x
+        self.rect.y = 450
+
