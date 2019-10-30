@@ -147,7 +147,6 @@ class Mario(Sprite):
         pygame.mixer.Sound.play(big_sfx)
 
     def update(self):
-
         li = [
             pygame.image.load('resources/graphics/marioimgs/mario1.png'),
             pygame.image.load('resources/graphics/marioimgs/mario2.png')

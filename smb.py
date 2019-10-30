@@ -95,8 +95,6 @@ def run_mario():
     active_sprite_list.add(mario)
 
     clock = pygame.time.Clock()
-  #  mario.blitme()
-
 
     while True:
         gf.check_events(mario)
@@ -124,6 +122,11 @@ def run_mario():
 
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
+
+
+        # goombas.update()
+        # green_koopas.update()
+        # blocks.update()
 
         for goomba in goombas:
             goomba.update()
