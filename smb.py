@@ -42,22 +42,16 @@ def run_mario():
     # plats.add(plat3)
 
 
-    mario = Mario(100, 100, screen, plats)
+    mario = Mario(100, 400, screen, plats)
 
     block = Blocks(screen, 256, 236, 32, 32, True, mario)
 
-    block.blitme()
+    #block.blitme()
     blocks = Group()
+    blocks.add(block)
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(100, 300, screen, plats, mario)
-
-    block = Blocks(screen, 156, 236, 32, 32, True, mario)
-    blocks = Group()
-
-    blocks.add(block)
-
-    block.blitme()
 
     goombas = Group()
     green_koopas = Group()
@@ -68,14 +62,8 @@ def run_mario():
     # plats.add(plat2)
     # plats.add(plat3)
 
-    blocks.add(block)
-
-    mario = Mario(100, 100, screen, plats)
-
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(100, 300, screen, plats, mario)
-
-
 
     goombas = Group()
     green_koopas = Group()
@@ -85,11 +73,9 @@ def run_mario():
     goombas.add(goomba2)
     green_koopas.add(koop1)
 
-    mario = Mario(0, 450, screen, plats)
-    #mario.blitme()
 
     # Create all the levels
-    level = Levels(mario)
+    level = Levels(mario, blocks)
 
     active_sprite_list = pygame.sprite.Group()
     active_sprite_list.add(mario)
@@ -113,8 +99,9 @@ def run_mario():
             mario.rect.right = 250
             level.shift_world(-diff)
 
+
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-        level.draw(screen)
+        level.draw(screen, blocks)
         active_sprite_list.draw(screen)
 
 

@@ -7,11 +7,12 @@ BLUE     = (   0,   0, 255)
 
 
 class Levels:
-    def __init__(self, player):
+    def __init__(self, player, blocks):
         # Lists of sprites used in all levels
         self.platform_list = None
         self.enemy_list = None
         self.block_list = None
+        self.blocks = blocks
         # self.img = pygame.image.load("resources/graphics/level_1.png").convert()
         # self.background = pygame.transform.scale(self.img, (3392, 500))
         self.background = pygame.image.load("resources/graphics/level_one.png").convert()
@@ -31,7 +32,7 @@ class Levels:
         self.enemy_list.update()
         self.block_list.update()
 
-    def draw(self, screen):
+    def draw(self, screen, blocks):
         """ Draw everything on this level. """
 
         # Draw the background
@@ -40,6 +41,7 @@ class Levels:
         screen.fill(BLUE)
         screen.blit(self.background, (self.world_shift, 0))
 
+        self.block_list = blocks
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)

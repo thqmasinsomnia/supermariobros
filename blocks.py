@@ -30,17 +30,31 @@ class Blocks(Sprite):
 
     def mario_collision(self):
 
-        print(self.rect.y)
+        print(self.y)
         print("m: " + str(self.mario.rect.y))
-        if self.rect.y + 32 == self.mario.rect.y:
-            print("hello")
-            self.mario.rect.y = self.y + 33
+        if self.rect.y + 32 == self.mario.rect.y + 4 and self.mario.rect.x in range(self.rect.x, self.rect.x + 32):
             if self.q_block:
+                self.mario.rect.y = self.rect.y + 33
+                self.mario.jumpcount = 0
+                self.mario.injump = False
                 self.image = pygame.image.load("resources/graphics/blocks/block1_hit.png")
                 print("hit")
             else:
                 self.kill()
                 print("boom")
+
+        # for posx in range(self.rect.x, self.rect.x + 32):
+        #     for m_posx in range(self.mario.rect.x, self.mario.rect.x + 32):
+        #         if self.rect.y + 32 == self.mario.rect.y:
+        #             print("hello")
+        #             self.mario.rect.y = self.rect.y + 33
+        #             if self.q_block:
+        #                 self.image = pygame.image.load("resources/graphics/blocks/block1_hit.png")
+        #                 print("hit")
+        #             else:
+        #                 self.kill()
+        #                 print("boom")
+
 
         # if self.mario.rect.y == (self.rect.y + 32) and self.mario.rect.x == (self.rect.x + 32):
         #     self.mario.rect.y = self.y + 32
