@@ -33,7 +33,7 @@ class Flying_Koopa(Sprite):
             pygame.transform.flip(pygame.image.load('resources/graphics/flying_koopaimgs/fly_koopa_2.png'), True,
                                   False)
         ]
-        self.walkcounter = 0;
+        self.walkcounter = 0
 
     def update(self):
 

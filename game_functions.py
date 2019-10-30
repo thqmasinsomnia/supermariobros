@@ -76,5 +76,6 @@ def  update_screen(screen, boundries, mario, goombas, koopas, blocks):
         koopa.goomba_collisions()
         koopa.blitme()
     for block in blocks:
+        block.mario_collision()
         block.blitme()
     pygame.display.flip()

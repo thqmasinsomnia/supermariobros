@@ -28,32 +28,28 @@ def run_mario():
     # plat2 = Boundry(100, 200, 100, 25, screen, False)
     # plat3 = Boundry(200, 300, 100, 25, screen, False)
 
-    block = Blocks(screen, 256, 236, 32, 32, True)
-
-
     ground.blitme()
-    block.blitme()
 
     #pygame.display.flip()
 
     plats = Group()
-    blocks = Group()
-
-
 
     plats.add(ground)
     # plats.add(plat1)
     # plats.add(plat2)
     # plats.add(plat3)
 
-    blocks.add(block)
-
     mario = Mario(100, 100, screen, plats)
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(100, 300, screen, plats, mario)
 
+    block = Blocks(screen, 156, 236, 32, 32, True, mario)
+    blocks = Group()
 
+    blocks.add(block)
+
+    block.blitme()
 
     goombas = Group()
     green_koopas = Group()
