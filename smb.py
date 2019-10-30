@@ -62,27 +62,27 @@ def run_mario():
 
     mario = Mario(0, 400, screen, plats)
 
-    goomba1 = Goomba(500, 0, screen, plats, mario)
-    goomba2 = Goomba(200, 400, screen, plats, mario)
-
-
-
-    goombas = Group()
-
-    koops = Group()
-
-    koop1 = Green_Koopa(500, 300, screen, plats, mario, goombas, koops)
-    fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
-    redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
-    koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
-
-
-    koops.add(koop1)
-    koops.add(koop2)
-    koops.add(fly1)
-    koops.add(redfly1)
-
-    goombas.add(goomba2)
+    # goomba1 = Goomba(500, 0, screen, plats, mario)
+    # goomba2 = Goomba(200, 400, screen, plats, mario)
+    #
+    #
+    #
+    # goombas = Group()
+    #
+    # koops = Group()
+    #
+    # koop1 = Green_Koopa(500, 300, screen, plats, mario, goombas, koops)
+    # fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
+    # redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
+    # koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
+    #
+    #
+    # koops.add(koop1)
+    # koops.add(koop2)
+    # koops.add(fly1)
+    # koops.add(redfly1)
+    #
+    # goombas.add(goomba2)
 
 
     #mario.blitme()
@@ -128,21 +128,21 @@ def run_mario():
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
 
-        for goomba in goombas:
-            goomba.update()
-
-        for plat in plats:
-            plat.blitme()
-
-        for koop in koops:
-            koop.update()
+        # for goomba in goombas:
+        #     goomba.update()
+        #
+        # for plat in plats:
+        #     plat.blitme()
+        #
+        # for koop in koops:
+        #     koop.update()
 
         for coin in coins:
             coin.update()
 
 
 
-        gf.update_screen(screen, plats, mario, goombas, koops, coins)
+        gf.update_screen(screen, plats, mario, coins)
         print("MARIO SCORE: " + str(mario.score))
 run_mario()
 
