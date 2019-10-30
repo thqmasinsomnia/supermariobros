@@ -9,10 +9,11 @@ class Pipe(Sprite):
     def __init__(self, type, cent_x, screen):
         self.width = 70
         self.type = type
+        self.screen = screen
+        # use blank sprite for pipe sprite
         self.rectangle = pygame.image.load('resources/graphics/nothing.png')
         self.rectangle_rect = self.rectangle.get_rect()
-    # use blank sprite for pipe sprite
-    # resize the blank sprite
+
         # if type is short
         if self.type == 'short':
             self.height = 70
@@ -26,7 +27,8 @@ class Pipe(Sprite):
             print("Error: type of pipe loaded was not short, medium, or long")
             exit()
 
-        self.rectangle = pygame.transform.scale(self.rectangle_rect(self.width, self.height))
+        # resize the blank sprite
+        self.rectangle = pygame.transform.scale(self.rectangle, (self.width, self.height))
     # We can land on the pipe sprite
     # def mario_is_on_top(self, mario):
     #     pass
@@ -45,4 +47,5 @@ class Pipe(Sprite):
 
 
 
-newpipe = Pipe('short', 30, window)
+    def blitme(self):
+        self.screen.blit(self.image, self.rectangle_rect)
