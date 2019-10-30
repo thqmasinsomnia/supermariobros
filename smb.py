@@ -13,6 +13,7 @@ from red_flying_koopa import Red_Flying_Koopa
 from coin import Coin
 from flag import Flag
 from main_menu import MainMenu
+from game_hub import GameHub
 
 
 def run_mario():
@@ -115,9 +116,12 @@ def run_mario():
 
     clock = pygame.time.Clock()
 
+    game_ui = GameHub(screen)   # holds game text for coins, time, etc
+
     while True:
         gf.check_events(mario)
         mario.update()
+
 
         #gf.update_screen(screen, boundries, mario)
 
@@ -136,6 +140,7 @@ def run_mario():
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         level.draw(screen)
         active_sprite_list.draw(screen)
+        game_ui.show_ui()   # show game text; time, coins, lives, etc
 
         clock.tick(60)
 

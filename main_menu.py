@@ -14,4 +14,4 @@ class MainMenu:
     def show_menu(self):
         img = pygame.image.load("resources/graphics/mainMenu.png").convert()
         self.screen.blit(img, [0, 0])
-        self.screen.blit(self.font.render('PRESS ENTER TO START', True, self.text_color), [self.x - 10, self.y - 50])
+        self.screen.blit(self.font.render('PRESS SPACE TO START', True, self.text_color), [self.x - 10, self.y - 50])
