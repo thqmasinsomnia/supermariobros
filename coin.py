@@ -48,5 +48,7 @@ class Coin(Sprite):
             coin_sfx = pygame.mixer.Sound("resources/sounds/coin.ogg")
             pygame.mixer.Sound.play(coin_sfx)
             self.mario.score += 100
+            self.mario.coin_count += 1
+
 
             self.kill()

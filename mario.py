@@ -39,6 +39,7 @@ class Mario(Sprite):
         self.pitdeath = False
         self.crouch = False
         self.is_lit = False
+        self.coin_count = 0
 
 
 
