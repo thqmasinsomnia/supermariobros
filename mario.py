@@ -2,6 +2,9 @@ import pygame
 from pygame.sprite import Sprite
 from pygame.sprite import Group
 from boundry import Boundry
+from levels import Levels
+from flag import Flag
+import sys
 
 vec = pygame.math.Vector2
 
@@ -12,7 +15,9 @@ class Mario(Sprite):
         self.moving_right = False
         self.score = 0
         self.lives = 3
+        self.reset_x = 0
         self.bd = boundries
+        # self.flg = flags
         self.screen = screen
         self.moving_left = False
         self.image = pygame.image.load('resources/graphics/marioimgs/mario.png')
@@ -28,6 +33,7 @@ class Mario(Sprite):
         self.jumpcount = 0
         self.is_big = False
         self.big_bd = Group()
+        # self.flag_group = Group()
         self.lives = 3
         self.deathcount = 0
         self.hit = False
@@ -35,13 +41,17 @@ class Mario(Sprite):
         self.crouch = False
         self.is_lit = False
         self.is_star = False
+        self.star_counter = 0
         self.facing_right = False
         self.facing_left = False
-
 
         for bnd in self.bd:
             x = Boundry(bnd.rect.x, bnd.rect.y - 34, bnd.width, bnd.height, self.screen, True)
             self.big_bd.add(x)
+
+        # for flag in self.flg:
+        #     x = Flag(flag.rect.x, flag.rect.y - 34, flag.width, flag.height, self.screen)
+        #     self.flag_group.add(x)
 
         """Mario animation sprite lists for L and R"""
         self.change_x = 0;
@@ -174,11 +184,6 @@ class Mario(Sprite):
         pygame.mixer.Sound.play(big_sfx)
 
     def update(self):
-        li = [
-            pygame.image.load('resources/graphics/marioimgs/mario1.png'),
-            pygame.image.load('resources/graphics/marioimgs/mario2.png')
-        ]
-
         if self.rect.y > 500 and self.pitdeath == False and self.hit == False:
             self.death_animation()
             self.hit = True
@@ -209,6 +214,14 @@ class Mario(Sprite):
             # Fire Mario
             if self.is_big and self.is_lit and not self.is_star:
                self.fire_mario()
+            if self.is_star:
+                self.star_mario()
+        if self.is_star:
+            if self.star_counter == 2000:
+                self.star_counter = 0
+                self.is_star = False
+                self.big_mario()
+            self.star_counter += 1
 
     def jump(self):
         self.rect.x += 1
@@ -244,7 +257,7 @@ class Mario(Sprite):
                 self.injump = True
                 jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
                 pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
+                self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
 
     def stop_left(self):
         # Called when the user lets off the keyboard and sets sprite to stance
@@ -267,6 +280,7 @@ class Mario(Sprite):
             self.image = self.lit_walking_frames_r[0]
 
     def death_animation(self):
+        self.reset_x = self.rect.x
         self.hit = True
         self.image = pygame.image.load('resources/graphics/marioimgs/mario_death.png')
         self.moving_right = False
@@ -278,10 +292,15 @@ class Mario(Sprite):
             self.rect.x += self.change_x
             pos = self.rect.x
 
-            if self.moving_right and self.rect.right < self.screen_rect.right:
+            if self.moving_right and self.rect.right < 7100:
                 self.center += 4
                 frame = (pos // 30) % len(self.walking_frames_r)
                 self.image = self.walking_frames_r[frame]
+
+                """This part could be used to interact with the flag and make the game end"""
+                if self.center == 7068:
+                    sys.exit()
+
             if self.moving_left and self.rect.left > 0:
                 self.center -= 4
                 frame = (pos // 30) % len(self.walking_frames_l)
@@ -289,6 +308,7 @@ class Mario(Sprite):
             if not hits:
                 self.rect.centery += 4
             self.rect.centerx = self.center
+            print("Mario pos:", self.rect.centerx)
 
             if self.injump:
                 if self.jumpcount > 2:
@@ -314,154 +334,160 @@ class Mario(Sprite):
                     if col:
                         self.rect.y = bnd.rect.y - 30
 
-        # # Normal Big Mario
-        # if self.is_big and not self.is_lit and not self.is_star:
-        #     hits = pygame.sprite.spritecollide(self, self.big_bd, False)
-        #     self.rect.x += self.change_x
-        #     pos = self.rect.x
-        #
-        #     if not self.injump:
-        #         for bnd in self.bd:
-        #             col = pygame.sprite.collide_rect(self, bnd)
-        #             if col:
-        #                 self.rect.y = bnd.rect.y - 30
-
     def big_mario(self):
-        li = [
-            pygame.image.load('resources/graphics/marioimgs/mario1.png'),
-            pygame.image.load('resources/graphics/marioimgs/mario2.png')
-        ]
-        hits = pygame.sprite.spritecollide(self, self.big_bd, False)
-        self.rect.x += self.change_x
-        pos = self.rect.x
+        if self.is_big and not self.is_lit and not self.is_star:
+            hits = pygame.sprite.spritecollide(self, self.big_bd, False)
+            self.rect.x += self.change_x
+            pos = self.rect.x
 
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.center += 4
-            frame = (pos // 30) % len(self.big_walking_frames_r)
-            self.image = self.big_walking_frames_r[frame]
-        if self.moving_left and self.rect.left > 0:
-            self.center -= 4
-            frame = (pos // 30) % len(self.big_walking_frames_l)
-            self.image = self.big_walking_frames_l[frame]
-        if not hits:
-            self.rect.centery += 4
-        self.rect.centerx = self.center
+            if self.moving_right and self.rect.right < 7100:
+                self.center += 4
+                frame = (pos // 30) % len(self.big_walking_frames_r)
+                self.image = self.big_walking_frames_r[frame]
+            if self.moving_left and self.rect.left > 0:
+                self.center -= 4
+                frame = (pos // 30) % len(self.big_walking_frames_l)
+                self.image = self.big_walking_frames_l[frame]
+            if not hits:
+                self.rect.centery += 4
+            self.rect.centerx = self.center
 
-        if self.injump:
-            if self.jumpcount > 2:
-                if hits:
-                    self.rect.centery += 20
+            if self.injump:
+                if self.jumpcount > 2:
+                    if hits:
+                        self.rect.centery += 20
+                        self.injump = False
+                        self.jumpcount = 0
+                if self.jumpcount < 40:
+                    self.rect.y -= 10
+                    self.jumpcount += 1
+                if 25 <= self.jumpcount < 80:
+                    self.jumpcount += 1
+                if self.jumpcount == 80:
                     self.injump = False
                     self.jumpcount = 0
-            if self.jumpcount < 40:
-                self.rect.y -= 10
-                self.jumpcount += 1
-            if 25 <= self.jumpcount < 80:
-                self.jumpcount += 1
-            if self.jumpcount == 80:
-                self.injump = False
-                self.jumpcount = 0
-                if self.facing_left:
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1L.png')
-                else:
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
-        if not self.injump:
-            for bnd in self.bd:
-                col = pygame.sprite.collide_rect(self, bnd)
-                if col:
-                    self.rect.y = bnd.rect.y - 30
-
-
-        # # Fire Mario
-        # if self.is_big and self.is_lit:
-        #     hits = pygame.sprite.spritecollide(self, self.big_bd, False)
-        #     self.rect.x += self.change_x
-        #     pos = self.rect.x
-        #
-        #     if self.moving_right and self.rect.right < self.screen_rect.right:
-        #         self.center += 4
-        #         frame = (pos // 30) % len(self.lit_walking_frames_r)
-        #         self.image = self.lit_walking_frames_r[frame]
-        #     if self.moving_left and self.rect.left > 0:
-        #         self.center -= 4
-        #         frame = (pos // 30) % len(self.lit_walking_frames_l)
-        #         self.image = self.lit_walking_frames_l[frame]
-        #     if not hits:
-        #         self.rect.centery += 4
-        #         self.rect.centerx = self.center
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
-        #
-        #     if self.jumpcount < 25:
-        #         self.rect.y -= 11
-        #         self.jumpcount += 1
-        #     if 25 <= self.jumpcount < 50:
-        #         self.jumpcount += 1
-        #     if self.jumpcount == 50:
-        #         self.injump = False
-        #         self.jumpcount = 0
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
-        #
-        # if not self.injump:
-        #     for bnd in self.big_bd:
-        #         col = pygame.sprite.collide_rect(self, bnd)
-        #         if col:
-        #             self.rect.y = bnd.rect.y - 30
-        # if self.crouch:
-        #     if self.image == li[0]:
-        #         print("facing right\n")
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_r.png')
-        #     else:
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_l.png')
-
-    def fire_mario(self):
-        li = [
-            pygame.image.load('resources/graphics/marioimgs/mario1.png'),
-            pygame.image.load('resources/graphics/marioimgs/mario2.png')
-        ]
-        hits = pygame.sprite.spritecollide(self, self.big_bd, False)
-        self.rect.x += self.change_x
-        pos = self.rect.x
-
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.center += 4
-            frame = (pos // 30) % len(self.lit_walking_frames_r)
-            self.image = self.lit_walking_frames_r[frame]
-        if self.moving_left and self.rect.left > 0:
-            self.center -= 4
-            frame = (pos // 30) % len(self.lit_walking_frames_l)
-            self.image = self.lit_walking_frames_l[frame]
-        if not hits:
-            self.rect.centery += 4
-        self.rect.centerx = self.center
-
-        if self.injump:
-            if self.jumpcount > 2:
-                if hits:
-                    self.rect.centery += 20
-                    self.injump = False
-                    self.jumpcount = 0
-            if self.jumpcount < 40:
-                self.rect.y -= 10
-                self.jumpcount += 1
-            if 25 <= self.jumpcount < 80:
-                self.jumpcount += 1
-            if self.jumpcount == 80:
-                self.injump = False
-                self.jumpcount = 0
-                if self.facing_left:
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2L.png')
-                else:
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
-        if not self.injump:
-            for bnd in self.bd:
-                col = pygame.sprite.collide_rect(self, bnd)
-                if col:
-                    self.rect.y = bnd.rect.y - 30
+                    if self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1L.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
+            if not self.injump:
+                for bnd in self.bd:
+                    col = pygame.sprite.collide_rect(self, bnd)
+                    if col:
+                        self.rect.y = bnd.rect.y - 30
             if self.crouch:
                 if self.facing_right:
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2_crouch_r.png')
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_r.png')
                 elif self.facing_left:
-                    self.image = pygame.image.load('resources/graphics/marioimgs/mario2_crouch_l.png')
+                    self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_l.png')
+
+    def fire_mario(self):
+        if self.is_lit:
+            hits = pygame.sprite.spritecollide(self, self.big_bd, False)
+            self.rect.x += self.change_x
+            pos = self.rect.x
+
+            if self.moving_right and self.rect.right < 7100:
+                self.center += 4
+                frame = (pos // 30) % len(self.lit_walking_frames_r)
+                self.image = self.lit_walking_frames_r[frame]
+            if self.moving_left and self.rect.left > 0:
+                self.center -= 4
+                frame = (pos // 30) % len(self.lit_walking_frames_l)
+                self.image = self.lit_walking_frames_l[frame]
+            if not hits:
+                self.rect.centery += 4
+            self.rect.centerx = self.center
+
+            if self.injump:
+                if self.jumpcount > 2:
+                    if hits:
+                        self.rect.centery += 20
+                        self.injump = False
+                        self.jumpcount = 0
+                if self.jumpcount < 40:
+                    self.rect.y -= 10
+                    self.jumpcount += 1
+                if 25 <= self.jumpcount < 80:
+                    self.jumpcount += 1
+                if self.jumpcount == 80:
+                    self.injump = False
+                    self.jumpcount = 0
+                    if self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2L.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
+            if not self.injump:
+                for bnd in self.bd:
+                    col = pygame.sprite.collide_rect(self, bnd)
+                    if col:
+                        self.rect.y = bnd.rect.y - 30
+                if self.crouch:
+                    if self.facing_right:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2_crouch_r.png')
+                    elif self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2_crouch_l.png')
+
+    def star_mario(self):
+        if self.is_star:
+            hits = pygame.sprite.spritecollide(self, self.big_bd, False)
+            self.rect.x += self.change_x
+            pos = self.rect.x
+
+            if self.star_counter % 6 == 0 and self.star_counter < 500:
+                self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
+            if self.star_counter % 13 == 0 and self.star_counter < 500:
+                self.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
+            if self.moving_right and self.rect.right < 7100:
+                self.center += 6
+                frame = (pos // 30) % len(self.star_walking_frames_r)
+                self.image = self.star_walking_frames_r[frame]
+            if self.moving_left and self.rect.left > 0:
+                self.center -= 6
+                frame = (pos // 30) % len(self.star_walking_frames_l)
+                self.image = self.star_walking_frames_l[frame]
+            if not hits:
+                self.rect.centery += 6
+            self.rect.centerx = self.center
+
+            if self.injump:
+                if self.jumpcount % 6 == 0 and self.jumpcount < 80:
+                    if self.facing_right:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1L_jump.png')
+                if self.jumpcount % 13 == 0 and self.jumpcount < 80:
+                    if self.facing_right:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2L_jump.png')
+                if self.jumpcount > 2:
+                    if hits:
+                        self.rect.centery += 20
+                        self.injump = False
+                        self.jumpcount = 0
+                if self.jumpcount < 40:
+                    self.rect.y -= 10
+                    self.jumpcount += 1
+                if 25 <= self.jumpcount < 80:
+                    self.jumpcount += 1
+                if self.jumpcount == 80:
+                    self.injump = False
+                    self.jumpcount = 0
+                    if self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1L.png')
+                    else:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
+            if not self.injump:
+                for bnd in self.bd:
+                    col = pygame.sprite.collide_rect(self, bnd)
+                    if col:
+                        self.rect.y = bnd.rect.y - 30
+                if self.crouch:
+                    if self.facing_right:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2_crouch_r.png')
+                    elif self.facing_left:
+                        self.image = pygame.image.load('resources/graphics/marioimgs/mario2_crouch_l.png')
 
     def jump(self):
         self.rect.x += 1
@@ -533,28 +559,16 @@ class Mario(Sprite):
         elif self.is_lit:
             self.image = self.lit_walking_frames_r[0]
 
-        #     if self.jumpcount < 25:
-        #         self.rect.y -= 11
-        #         self.jumpcount += 1
-        #     if 25 <= self.jumpcount < 50:
-        #         self.jumpcount += 1
-        #     if self.jumpcount == 50:
-        #         self.injump = False
-        #         self.jumpcount = 0
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
-        #
-        # if not self.injump:
-        #     for bnd in self.big_bd:
-        #         col = pygame.sprite.collide_rect(self, bnd)
-        #         if col:
-        #             self.rect.y = bnd.rect.y - 30
-        # if self.crouch:
-        #     if self.image == li[1]:
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_r.png')
-        #     else:
-        #         self.image = pygame.image.load('resources/graphics/marioimgs/mario1_crouch_l.png')
 
     def wall_col(self):
         for bound in self.bd:
             if self.rect.right == bound.rect.left:
-                 self.moving_right = False
+                self.moving_right = False
+                if self.rect.y + 30 > bound.rect.y:
+                    self.moving_right = False
+
+
+    def reset(self):
+        self.lives -= 1
+        self.rect.x = self.reset_x
+        self.rect.y = 450

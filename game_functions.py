@@ -25,8 +25,6 @@ def check_keydown_events(event, mario):
         mario.jump()
     elif event.key == pygame.K_t:
         mario.mario_state()
-    elif event.key == pygame.K_i:
-        mario.is_star = True
     elif event.key == pygame.K_DOWN:
         if not mario.injump:
             mario.crouch = True
@@ -65,24 +63,26 @@ def check_keyup_events(event, mario):
     #         mario.stop()
 
 
-
-def  update_screen(screen, boundries, mario, coins):
+def  update_screen(screen, boundries, mario, goombas, koops, coins):
    # screen.fill([0, 255, 0])
     mario.blitme()
+    mario.wall_col()
     for bound in boundries:
         bound.blitme()
     for bound in mario.big_bd:
         bound.blitme()
-    # for goomba in goombas:
-    #     goomba.mario_collision()
-    #     goomba.blitme()
-    # for koopa in koops:
-    #     koopa.mario_collision()
-    #     koopa.goomba_collisions()
-    #     koopa.blitme()
+    for goomba in goombas:
+        goomba.mario_collision()
+        goomba.blitme()
+    for koopa in koops:
+        koopa.mario_collision()
+        koopa.goomba_collisions()
+        koopa.blitme()
     for coin in coins:
         coin.mario_collision()
         coin.blitme()
+    # for flag in flags:
+    #     flag.blitme()
 
 
 

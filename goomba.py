@@ -65,7 +65,8 @@ class Goomba(Sprite):
     def mario_collision(self):
 
         col = False
-        oof = False
+        oof = pygame.sprite.collide_rect(self, self.mario)
+
 
 
         if self.mario.is_big:
@@ -74,8 +75,6 @@ class Goomba(Sprite):
         elif not self.mario.is_big:
             if self.rect.y >= self.mario.rect.y + 30 >= self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < self.rect.x + 32:
                 col = True
-
-        oof = pygame.sprite.collide_rect(self, self.mario)
 
         if col:
             self.squish()
