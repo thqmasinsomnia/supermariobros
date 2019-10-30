@@ -116,7 +116,7 @@ def run_mario():
 
     clock = pygame.time.Clock()
 
-    game_ui = GameHub(screen)   # holds game text for coins, time, etc
+    game_ui = GameHub(screen, mario)   # holds game text for coins, time, etc
 
     while True:
         gf.check_events(mario)
@@ -140,7 +140,7 @@ def run_mario():
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         level.draw(screen)
         active_sprite_list.draw(screen)
-        game_ui.show_ui()   # show game text; time, coins, lives, etc
+        game_ui.show_ui(mario)   # show game text; time, coins, lives, etc
 
         clock.tick(60)
 
