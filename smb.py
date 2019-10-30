@@ -11,8 +11,13 @@ from red_koopa import Red_Koopa
 from flying_koopa import Flying_Koopa
 from red_flying_koopa import Red_Flying_Koopa
 from coin import Coin
+<<<<<<< Updated upstream
 
 # clock = pygame.time.Clock()
+=======
+from flag import Flag
+from main_menu import MainMenu
+>>>>>>> Stashed changes
 
 
 def run_mario():
@@ -78,9 +83,9 @@ def run_mario():
 
 
     koops.add(koop1)
-    koops.add(koop2)
-    koops.add(fly1)
-    koops.add(redfly1)
+   # koops.add(koop2)
+    # koops.add(fly1)
+   # koops.add(redfly1)
 
     goombas.add(goomba2)
 
@@ -99,8 +104,11 @@ def run_mario():
     coin1 = Coin(200, 300, screen, plats, mario)
     coins = Group()
 
+<<<<<<< Updated upstream
     coins.add(coin1)
 
+=======
+>>>>>>> Stashed changes
     while True:
         gf.check_events(mario)
         mario.update()
@@ -121,7 +129,10 @@ def run_mario():
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         level.draw(screen)
         active_sprite_list.draw(screen)
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
         clock.tick(60)
 
