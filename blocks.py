@@ -34,6 +34,7 @@ class Blocks(Sprite):
         if collision:
             if self.q_block:
                 self.image = pygame.image.load("resources/graphics/blocks/block1_hit.png")
+                print("hit")
             else:
                 self.kill()
                 print("boom")
