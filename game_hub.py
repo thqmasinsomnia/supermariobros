@@ -1,4 +1,5 @@
 import pygame
+import time
 from mario import Mario
 
 class GameHub:
@@ -9,6 +10,17 @@ class GameHub:
         self.text = 'SCORE COINS WORLD TIME LIVES'
         self.text_color = (255, 255, 255)
         self.mario = mario
+        self.start_time = 400
+
+    # def timer(self):
+    #     previous_time = pygame.time.get_ticks()
+    #     if self.start_time > 0:
+    #         self.start_time -= 1
+    #         #if previous_time - self.start_time == 1000:  # 1000ms = 1s
+    #             #self.start_time -= 1
+    #         print("time: ", self.start_time)
+    #             #timer = "time left: {}".format(secs)
+    #     #         #time.sleep(1)
 
     def show_ui(self, mario):
         x = 10
@@ -32,7 +44,7 @@ class GameHub:
         rect = text.get_rect(center=(250, 35))
         self.screen.blit(text, rect)
 
-        # text = self.font.render(str("get the time"), False, self.text_color)
+        # text = self.font.render(str(self.timer()), False, self.text_color)
         # rect = text.get_rect(center=(557, 35))
         # self.screen.blit(text, rect)
 

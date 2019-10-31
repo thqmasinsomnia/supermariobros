@@ -9,7 +9,7 @@ BLUE     = (   0,   0, 255)
 
 
 class Levels:
-    def __init__(self, mario):
+    def __init__(self, goombas, koops, plats):
         # Lists of sprites used in all levels
         self.platform_list = None
         self.enemy_list = None
@@ -21,17 +21,17 @@ class Levels:
         self.level_limit = -3300
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
-        self.mario = mario
-
-        #add flags to a group
-        self.flag = Flag(700, 200, 32, 32)
-        self.platform_list.add(self.flag)
+        #self.mario = mario
+        self.enemy_list.add(goombas)
+        self.enemy_list.add(koops)
+        self.platform_list.add(plats)
 
 
 
     # Update everything on this level
     def update(self):
         # Update everything
+
         self.platform_list.update()
         self.enemy_list.update()
 
