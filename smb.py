@@ -14,6 +14,7 @@ from coin import Coin
 from flag import Flag
 from main_menu import MainMenu
 from game_hub import GameHub
+from mushroom import Mushroom
 
 
 def run_mario():
@@ -118,6 +119,12 @@ def run_mario():
 
     game_ui = GameHub(screen, mario)   # holds game text for coins, time, etc
 
+    big = Mushroom(400, 300, screen, plats, "one_up", mario)
+
+    mushrooms = Group()
+
+    mushrooms.add(big)
+
     while True:
         gf.check_events(mario)
         mario.update()
@@ -159,7 +166,11 @@ def run_mario():
         for coin in coins:
             coin.update()
 
-        gf.update_screen(screen, plats, mario, goombas, koops, coins)
+        for mush in mushrooms:
+            mush.update()
+
+
+        gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms)
 
         pygame.display.flip()
         print("MARIO SCORE: " + str(mario.score))

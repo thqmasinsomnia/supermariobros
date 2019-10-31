@@ -121,7 +121,7 @@ class Red_Koopa(Sprite):
                     if self.rect.y >= self.mario.rect.y + 30 > self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < self.rect.x + 32:
                         col = True
 
-                oof = pygame.sprite.collide_rect(self, self.mario)
+
 
                 if col:
                     self.image = pygame.image.load('resources/graphics/red_koopa_imgs/red_koopa_shell.png')
@@ -135,11 +135,22 @@ class Red_Koopa(Sprite):
                     self.dead = True
                     self.isshell = True
 
+                oof = pygame.sprite.collide_rect(self, self.mario)
+                if self.mario.is_big and self.rect.x < self.mario.rect.x < self.rect.x + 32:
+                    oof = True
+
                 if not self.dead:
-                    if oof:
-                        pygame.mixer.music.load('resources/audio/death.wav')
-                        pygame.mixer.music.play(1)
-                        self.mario.death_animation()
+                    if oof and self.grace > 30:
+                        if not self.mario.is_big:
+                            print("FUC")
+                            pygame.mixer.music.load('resources/audio/death.wav')
+                            pygame.mixer.music.play(1)
+                            self.mario.death_animation()
+                        elif self.mario.is_big:
+                            self.mario.make_small()
+                            self.grace = 0
+                    else:
+                        self.grace += 1
 
         else:
 

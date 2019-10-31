@@ -54,7 +54,7 @@ def check_keyup_events(event, mario):
 
 
 
-def  update_screen(screen, boundries, mario, goombas,koops, coins):
+def  update_screen(screen, boundries, mario, goombas,koops, coins, mushrooms):
    # screen.fill([0, 255, 0])
     mario.blitme()
     mario.wall_col()
@@ -72,6 +72,10 @@ def  update_screen(screen, boundries, mario, goombas,koops, coins):
     for coin in coins:
         coin.mario_collision()
         coin.blitme()
+    for mush in mushrooms:
+        mush.mario_collision()
+        mush.blitme()
+
     # for flag in flags:
     #     flag.blitme()
 
