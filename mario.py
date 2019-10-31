@@ -185,6 +185,11 @@ class Mario(Sprite):
         pygame.mixer.Sound.play(big_sfx)
 
     def update(self):
+        li = [
+            pygame.image.load('resources/graphics/marioimgs/mario1.png'),
+            pygame.image.load('resources/graphics/marioimgs/mario2.png')
+        ]
+
         if self.rect.y > 500 and self.pitdeath == False and self.hit == False:
             self.death_animation()
             self.hit = True

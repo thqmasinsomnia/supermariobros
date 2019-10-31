@@ -63,8 +63,14 @@ def check_keyup_events(event, mario):
     #         mario.stop()
 
 
+#Box Collide Function
+def check_box_collision(screen, blocks, mario):
+    collisions = pygame.sprite.groupcollide(mario, blocks, True, True)
+    if collisions:
+        blocks.image = pygame.image.load("resources/graphics/nothing.png")
 
-def  update_screen(screen, boundries, mario, goombas,koops, coins, mushrooms):
+
+def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, blocks):
    # screen.fill([0, 255, 0])
     mario.blitme()
     mario.wall_col()
@@ -75,7 +81,7 @@ def  update_screen(screen, boundries, mario, goombas,koops, coins, mushrooms):
     for goomba in goombas:
         goomba.mario_collision()
         goomba.blitme()
-    for koopa in koops:
+    for koopa in koopas:
         koopa.mario_collision()
         koopa.goomba_collisions()
         koopa.blitme()
@@ -89,6 +95,7 @@ def  update_screen(screen, boundries, mario, goombas,koops, coins, mushrooms):
     # for flag in flags:
     #     flag.blitme()
 
-
+    for block in blocks:
+        block.mario_collision()
 
     pygame.display.flip()
