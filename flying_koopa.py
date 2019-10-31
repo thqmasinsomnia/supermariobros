@@ -128,7 +128,7 @@ class Flying_Koopa(Sprite):
                     self.isshell = True
 
                 if not self.dead:
-                    if oof and self.grace > 30:
+                    if oof  and self.grace > 30:
                         if not self.mario.is_big:
                             print("FUC")
                             pygame.mixer.music.load('resources/audio/death.wav')
