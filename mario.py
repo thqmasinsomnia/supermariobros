@@ -31,7 +31,7 @@ class Mario(Sprite):
         self.acc = vec(0, 0)
         self.injump = False
         self.jumpcount = 0
-        self.is_big = False
+        self.is_big = False  #Is big
         self.big_bd = Group()
         # self.flag_group = Group()
         self.lives = 3
@@ -39,12 +39,14 @@ class Mario(Sprite):
         self.hit = False
         self.pitdeath = False
         self.crouch = False
-        self.is_lit = False
         self.coin_count = 0
         self.is_star = False
         self.star_counter = 0
         self.facing_right = False
         self.facing_left = False
+        self.is_lit = False  # Is fire
+        self.dist_from_origin = 16
+
 
         for bnd in self.bd:
             x = Boundry(bnd.rect.x, bnd.rect.y - 34, bnd.width, bnd.height, self.screen, True)
@@ -212,6 +214,7 @@ class Mario(Sprite):
 
         if not self.hit:
             # Small Mario
+
             if not self.is_big and not self.is_lit and not self.is_star:
                 self.small_mario()
             # Normal Big Mario
@@ -320,6 +323,127 @@ class Mario(Sprite):
                 if self.jumpcount > 2:
                     if hits:
                         self.rect.centery += 20
+
+            if not self.is_big and not self.is_lit:
+                hits = pygame.sprite.spritecollide(self, self.bd, False)
+                self.rect.x += self.change_x
+                self.dist_from_origin += self.change_x
+                pos = self.rect.x
+
+                if self.moving_right and self.rect.right < self.screen_rect.right:
+                    self.center += 4
+                    self.dist_from_origin += 4
+                    frame = (pos // 30) % len(self.walking_frames_r)
+                    self.image = self.walking_frames_r[frame]
+                if self.moving_left and self.rect.left > 0:
+                    self.center -= 4
+                    self.dist_from_origin -= 4
+                    frame = (pos // 30) % len(self.walking_frames_l)
+                    self.image = self.walking_frames_l[frame]
+                if not hits:
+                    self.rect.centery += 4
+                self.rect.centerx = self.center
+
+                if self.injump:
+                    if self.jumpcount > 2:
+                        if hits:
+                            self.rect.centery += 20
+                            self.injump = False
+                            self.jumpcount = 0
+
+                    if self.jumpcount < 25:
+                        self.rect.y -= 10
+                        self.jumpcount += 1
+                    if 25 <= self.jumpcount < 50:
+                        self.jumpcount += 1
+                    if self.jumpcount == 50:
+                        self.injump = False
+                        self.jumpcount = 0
+
+                    if not self.injump:
+                        for bnd in self.bd:
+                            col = pygame.sprite.collide_rect(self, bnd)
+                            if col:
+                                self.rect.y = bnd.rect.y - 30
+
+                if self.is_big:
+                    hits = pygame.sprite.spritecollide(self, self.big_bd, False)
+                    self.rect.x += self.change_x
+                    self.dist_from_origin += self.change_x
+                    pos = self.rect.x
+
+                    if self.moving_right and self.rect.right < self.screen_rect.right:
+                        self.center += 4
+                        self.dist_from_origin += 4
+                        frame = (pos // 30) % len(self.big_walking_frames_r)
+                        self.image = self.big_walking_frames_r[frame]
+                    if self.moving_left and self.rect.left > 0:
+                        self.center -= 4
+                        self.dist_from_origin -= 4
+                        frame = (pos // 30) % len(self.big_walking_frames_l)
+                        self.image = self.big_walking_frames_l[frame]
+                    if not hits:
+                        self.rect.centery += 4
+                    self.rect.centerx = self.center
+
+                    if self.injump:
+                        if self.jumpcount > 2:
+                            if hits:
+                                self.rect.centery += 20
+                                self.injump = False
+                                self.jumpcount = 0
+
+                        if self.jumpcount < 25:
+                            self.rect.y -= 10
+                            self.jumpcount += 1
+                        if 25 <= self.jumpcount < 50:
+                            self.jumpcount += 1
+                        if self.jumpcount == 50:
+                            self.injump = False
+                            self.jumpcount = 0
+                            self.image = pygame.image.load('resources/graphics/marioimgs/mario.png')
+
+                if not self.injump:
+                    for bnd in self.bd:
+                        col = pygame.sprite.collide_rect(self, bnd)
+                        if col:
+                            self.rect.y = bnd.rect.y - 30
+
+            # Normal Big Mario
+            if self.is_big and not self.is_lit:
+                hits = pygame.sprite.spritecollide(self, self.big_bd, False)
+                self.rect.x += self.change_x
+                self.dist_from_origin += self.change_x
+                pos = self.rect.x
+
+                if self.moving_right and self.rect.right < self.screen_rect.right:
+                    self.center += 4
+                    self.dist_from_origin += 4
+                    frame = (pos // 30) % len(self.big_walking_frames_r)
+                    self.image = self.big_walking_frames_r[frame]
+                if self.moving_left and self.rect.left > 0:
+                    self.center -= 4
+                    self.dist_from_origin -= 4
+                    frame = (pos // 30) % len(self.big_walking_frames_l)
+                    self.image = self.big_walking_frames_l[frame]
+                if not hits:
+                    self.rect.centery += 4
+                self.rect.centerx = self.center
+
+                if self.injump:
+                    if self.jumpcount > 2:
+                        if hits:
+                            self.rect.centery += 20
+                            self.injump = False
+                            self.jumpcount = 0
+                            self.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
+
+                    if self.jumpcount < 25:
+                        self.rect.y -= 11
+                        self.jumpcount += 1
+                    if 25 <= self.jumpcount < 50:
+                        self.jumpcount += 1
+                    if self.jumpcount == 50:
                         self.injump = False
                         self.jumpcount = 0
                 if self.jumpcount < 40:
@@ -497,9 +621,11 @@ class Mario(Sprite):
 
     def jump(self):
         self.rect.x += 1
+        self.dist_from_origin += 1
         on_plat = pygame.sprite.spritecollide(self, self.bd, False)
         on_big_plat = pygame.sprite.spritecollide(self, self.big_bd, False)
         self.rect.x += 1
+        self.dist_from_origin += 1
 
         if not self.is_big and not self.is_lit and not self.is_star:
             if on_plat:
@@ -573,8 +699,12 @@ class Mario(Sprite):
                 if self.rect.y + 30 > bound.rect.y:
                     self.moving_right = False
 
-
     def reset(self):
         self.lives -= 1
         self.rect.x = self.reset_x
         self.rect.y = 450
+
+
+
+    def check_for_pipe(self):
+        pass

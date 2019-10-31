@@ -16,6 +16,8 @@ from blocks import Blocks
 from main_menu import MainMenu
 from game_hub import GameHub
 from mushroom import Mushroom
+from pipe import Pipe
+
 
 def run_mario():
     pygame.init()
@@ -156,11 +158,22 @@ def run_mario():
 
     mushrooms.add(big)
 
+    # Create the pipes
+    pipe0 = Pipe('short', 100, screen)
+    pipe1 = Pipe('short', 1035, screen)
+    pipe2  = Pipe('medium', 1393, screen)
+    pipe3 = Pipe('long', 1678, screen)
+    pipe4 = Pipe('long', 2071, screen)
+    pipe5 = Pipe('short', 5857, screen)
+    pipe6 = Pipe('short', 6427, screen)
+
+    pipelist = [pipe1, pipe2, pipe3, pipe4, pipe5, pipe6]
 
     while True:
         gf.check_events(mario)
         mario.update()
 
+        pipe1.blitme()
 
         #gf.update_screen(screen, boundries, mario)
 
@@ -178,10 +191,18 @@ def run_mario():
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+
         level.draw(screen, blocks)
+
+        level.draw(screen, pipe1)
+
         active_sprite_list.draw(screen)
         game_ui.show_ui(mario)   # show game text; time, coins, lives, etc
         clock.tick(60)
+
+        # Go ahead and update the screen with what we've draw.
+        pygame.display.flip()
+
         for goomba in goombas:
             goomba.update()
         for plat in plats:
@@ -194,7 +215,7 @@ def run_mario():
             mush.update()
         for block in blocks:
             block.update()
-        gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks)
+        gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks, pipelist)
         pygame.display.flip()
 
 run_mario()

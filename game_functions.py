@@ -70,10 +70,14 @@ def check_box_collision(screen, blocks, mario):
         blocks.image = pygame.image.load("resources/graphics/nothing.png")
 
 
-def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, blocks):
+def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, blocks, pipelist):
    # screen.fill([0, 255, 0])
     mario.blitme()
-    mario.wall_col()
+
+    for pipe in pipelist:
+        pipe.blitme()
+        pipelist.blitme()
+
     for bound in boundries:
         bound.blitme()
     for bound in mario.big_bd:
