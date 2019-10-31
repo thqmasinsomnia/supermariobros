@@ -104,8 +104,9 @@ class Green_Koopa(Sprite):
 
         if not self.isshell:
                 col = False
-                oof = False
 
+                oof = False
+                oof = pygame.sprite.collide_rect(self, self.mario)
                 if self.mario.is_big:
                     if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
                         col = True
@@ -144,6 +145,12 @@ class Green_Koopa(Sprite):
                     else:
                         self.grace += 1
 
+                    if oof:
+                        print("OOOOF")
+                        pygame.mixer.music.load('resources/audio/death.wav')
+                        pygame.mixer.music.play(1)
+                        self.mario.death_animation()
+
         else:
 
             oof = pygame.sprite.collide_rect(self, self.mario)
@@ -155,6 +162,7 @@ class Green_Koopa(Sprite):
 
 
             if oof and self.movingshell and self.grace > 20:
+
                 pygame.mixer.music.load('resources/audio/death.wav')
                 pygame.mixer.music.play(1)
                 self.mario.death_animation()

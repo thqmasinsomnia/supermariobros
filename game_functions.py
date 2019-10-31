@@ -15,14 +15,16 @@ def check_events(mario):
 def check_keydown_events(event, mario):
     if event.key == pygame.K_RIGHT:
         mario.moving_right = True
+        mario.facing_right = True
+        mario.facing_left = False
     elif event.key == pygame.K_LEFT:
         mario.moving_left = True
+        mario.facing_left = True
+        mario.facing_right = False
     elif event.key == pygame.K_SPACE:
         mario.jump()
     elif event.key == pygame.K_t:
         mario.mario_state()
-    elif event.key == pygame.K_i:
-        mario.is_star = True
     elif event.key == pygame.K_DOWN:
         if not mario.injump:
             mario.crouch = True
@@ -42,8 +44,16 @@ def check_keyup_events(event, mario):
         mario.stop_left()
     elif event.key == pygame.K_DOWN:
         mario.crouch = False
-        if mario.is_big:
-            mario.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
+        if mario.is_big and not mario.is_lit:
+            if mario.facing_left:
+                mario.image = pygame.image.load('resources/graphics/marioimgs/mario1L.png')
+            else:
+                mario.image = pygame.image.load('resources/graphics/marioimgs/mario1.png')
+        elif mario.is_big and mario.is_lit:
+            if mario.facing_left:
+                mario.image = pygame.image.load('resources/graphics/marioimgs/mario2L.png')
+            else:
+                mario.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
 
 
     # if event.type == pygame.KEYUP:

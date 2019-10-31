@@ -11,6 +11,12 @@ from red_koopa import Red_Koopa
 from flying_koopa import Flying_Koopa
 from red_flying_koopa import Red_Flying_Koopa
 from coin import Coin
+
+
+# clock = pygame.time.Clock()
+from flag import Flag
+from main_menu import MainMenu
+
 from flag import Flag
 from main_menu import MainMenu
 from game_hub import GameHub
@@ -77,6 +83,7 @@ def run_mario():
     # mario = Mario(0, 400, screen, plats, flags)
     mario = Mario(0, 400, screen, plats)
 
+
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(200, 400, screen, plats, mario)
 
@@ -86,19 +93,19 @@ def run_mario():
 
     koops = Group()
 
-    koop1 = Green_Koopa(1000, 300, screen, plats, mario, goombas, koops)
-    fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
-    redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
-    koop2 = Red_Koopa(700, 300, screen, plats, mario, goombas)
+    # koop1 = Green_Koopa(500, 300, screen, plats, mario, goombas, koops)
+    # fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
+    # redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
+    # koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
+    #
+    #
+    # koops.add(koop1)
+    # koops.add(koop2)
+    # koops.add(fly1)
+    # koops.add(redfly1)
+    #
+    # goombas.add(goomba2)
 
-
-
-    koops.add(koop1)
-    koops.add(koop2)
-    koops.add(fly1)
-    koops.add(redfly1)
-
-    goombas.add(goomba2)
 
 
     #mario.blitme()
@@ -113,6 +120,7 @@ def run_mario():
 
     coin1 = Coin(200, 300, screen, plats, mario)
     coins = Group()
+
     coins.add(coin1)
 
     clock = pygame.time.Clock()
@@ -124,6 +132,7 @@ def run_mario():
     mushrooms = Group()
 
     mushrooms.add(big)
+
 
     while True:
         gf.check_events(mario)
@@ -149,6 +158,7 @@ def run_mario():
         active_sprite_list.draw(screen)
         game_ui.show_ui(mario)   # show game text; time, coins, lives, etc
 
+        game_ui.show_ui(mario)   # show game text; time, coins, lives, etc
         clock.tick(60)
 
         # Go ahead and update the screen with what we've drawn.
