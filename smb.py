@@ -41,9 +41,9 @@ def run_mario():
     ground3 = Boundry(3178, 450, 2285, 200, screen, True)
     ground4 = Boundry(5536, 450, 2034, 200, screen, True)
 
-    flag1 = Flag(200, 200, 32, 32)
-    flags = Group()
-    flags.add(flag1)
+    # flag1 = Flag(200, 200, 32, 32)
+    # flags = Group()
+    # flags.add(flag1)
 
     stairset1 = Boundry(4784, 408, 144, 36, screen, True)
     stairset2 = Boundry(4827, 375, 101, 36, screen, True)
@@ -104,7 +104,7 @@ def run_mario():
     #mario.blitme()
 
     # Create all the levels
-    level = Levels(mario)
+    level = Levels(goombas, koops, plats)
 
     active_sprite_list = pygame.sprite.Group()
     active_sprite_list.add(mario)
@@ -154,17 +154,17 @@ def run_mario():
         # Go ahead and update the screen with what we've drawn.
         #pygame.display.flip()
 
-        for goomba in goombas:
-            goomba.update()
-
-        for plat in plats:
-            plat.blitme()
-
-        for koop in koops:
-            koop.update()
-
-        for coin in coins:
-            coin.update()
+        # for goomba in goombas:
+        #     goomba.update()
+        #
+        # for plat in plats:
+        #     plat.blitme()
+        #
+        # for koop in koops:
+        #     koop.update()
+        #
+        # for coin in coins:
+        #     coin.update()
 
         for mush in mushrooms:
             mush.update()
