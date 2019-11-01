@@ -119,7 +119,6 @@ class Red_Flying_Koopa(Sprite):
                 if not self.dead:
                     if oof and self.grace > 30:
                         if not self.mario.is_big:
-                            print("FUC")
                             pygame.mixer.music.load('resources/audio/death.wav')
                             pygame.mixer.music.play(1)
                             self.mario.death_animation()

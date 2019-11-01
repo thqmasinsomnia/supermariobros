@@ -29,7 +29,6 @@ class Pipe(Sprite):
             exit()
 
         self.image = pygame.Surface((70, self.height)).convert()
-        self.image.fill([0, 0, 0])
         # resize the blank sprite
         self.rectangle = pygame.transform.scale(self.rectangle, (self.width, self.height))
 

@@ -103,8 +103,6 @@ def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, 
         block.mario_collision()
         block.blitme()
 
-    for pipe in pipelist:
-        pipe.blitme()
-        pipe.mario_col()
+
 
     pygame.display.flip()

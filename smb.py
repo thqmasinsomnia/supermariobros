@@ -39,19 +39,21 @@ def run_mario():
                     main_start = False
 
     plats = Group()
+    plats2 = Group()
     ground = Boundry(0, 450, 2469, 200, screen, True)
     ground2 = Boundry(2534, 450, 536, 200, screen, True)
     ground3 = Boundry(3178, 450, 2285, 200, screen, True)
     ground4 = Boundry(5536, 450, 2034, 200, screen, True)
+    pipe1 = Boundry(1000, 375, 70, 200, screen, False)
 
     # flag1 = Flag(200, 200, 32, 32)
     # flags = Group()
     # flags.add(flag1)
 
-    stairset1 = Boundry(4784, 408, 144, 36, screen, True)
-    stairset2 = Boundry(4827, 375, 101, 36, screen, True)
-    stairset3 = Boundry(4856, 338, 72, 36, screen, True)
-    stairset4 = Boundry(4892, 303, 36, 36, screen, True)
+    stairset1 = Boundry(4784, 408, 144, 36, screen, False)
+    stairset2 = Boundry(4827, 375, 101, 36, screen, False)
+    stairset3 = Boundry(4856, 338, 72, 36, screen, False)
+    stairset4 = Boundry(4892, 303, 36, 36, screen, False)
 
     screen = pygame.display.set_mode((500, 500))
     pygame.display.set_caption("SUPER MARIO BRUHS")
@@ -66,11 +68,16 @@ def run_mario():
     plats.add(ground2)
     plats.add(ground3)
     plats.add(ground4)
+    plats.add(pipe1)
+    plats.add(stairset1)
+    plats.add(stairset2)
+    plats.add(stairset3)
+    plats.add(stairset4)
+
 
     mario = Mario(0, 100, screen, plats)
 
-    goomba1 = Goomba(500, 0, screen, plats, mario)
-    goomba2 = Goomba(200, 400, screen, plats, mario)
+
 
     block = Blocks(screen, 256, 236, 32, 32, False, mario)
 
@@ -78,12 +85,7 @@ def run_mario():
     blocks = Group()
     blocks.add(block)
 
-    goomba1 = Goomba(500, 0, screen, plats, mario)
-    goomba2 = Goomba(100, 300, screen, plats, mario)
 
-    goombas = Group()
-    green_koopas = Group()
-    koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas, green_koopas)
 
     plats.add(ground)
     # plats.add(plat1)
@@ -91,29 +93,25 @@ def run_mario():
     # plats.add(plat3)
 
     koops = Group()
-    koop1 = Green_Koopa(500, 300, screen, plats, mario, goombas, koops)
-    fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
-    redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
-    koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
-
-    # koops.add(koop1)
-    # koops.add(koop2)
-    # koops.add(fly1)
-    # koops.add(redfly1)
-
-    # goombas.add(goomba2)
-
-    goomba1 = Goomba(500, 0, screen, plats, mario)
-    goomba2 = Goomba(100, 300, screen, plats, mario)
-
     goombas = Group()
-    green_koopas = Group()
-    # koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas)
 
-    # goombas.add(goomba2)
-    green_koopas.add(koop1)
+    goomba1 = Goomba(500, 400, screen, plats, mario)
+    goomba2 = Goomba(200, 400, screen, plats, mario)
+    goombas.add(goomba1)
+    goombas.add(goomba2)
 
-    level = Levels(goombas, koops, plats, blocks, mario)
+    green1 = Green_Koopa(342, 400, screen, plats, mario, goombas)
+    koops.add(green1)
+    flygreen1 = Flying_Koopa(500, 400, screen, plats, mario, goombas)
+    koops.add(flygreen1)
+    flyred1 = Red_Flying_Koopa(200, 400, screen, plats, mario, goombas)
+    koops.add(flyred1)
+    red1 = Red_Koopa(200, 400, screen, plats, mario, goombas)
+    koops.add(red1)
+
+
+
+    level = Levels(goombas, koops, plats2, blocks, mario)
 
     active_sprite_list = pygame.sprite.Group()
     active_sprite_list.add(mario)
@@ -131,7 +129,7 @@ def run_mario():
 
     game_ui = GameHub(screen, mario)  # holds game text for coins, time, etc
 
-    big = Mushroom(400, 300, screen, plats, "one_up", mario)
+    big = Mushroom(400, 300, screen, plats, "big", mario)
 
     mushrooms = Group()
 
@@ -148,13 +146,7 @@ def run_mario():
 
     pipelist = Group()
 
-    pipelist.add(pipe0)
-    pipelist.add(pipe1)
-    pipelist.add(pipe2)
-    pipelist.add(pipe3)
-    pipelist.add(pipe4)
-    pipelist.add(pipe5)
-    pipelist.add(pipe6)
+
 
 
     while True:
