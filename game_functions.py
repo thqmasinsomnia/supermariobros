@@ -25,6 +25,10 @@ def check_keydown_events(event, mario):
         mario.jump()
     elif event.key == pygame.K_t:
         mario.mario_state()
+    elif event.key == pygame.K_r:
+        mario.reset()
+    elif event.key == pygame.K_c:
+        mario.give_coin()
     elif event.key == pygame.K_DOWN:
         if not mario.injump:
             mario.crouch = True
@@ -70,7 +74,7 @@ def check_box_collision(screen, blocks, mario):
         blocks.image = pygame.image.load("resources/graphics/nothing.png")
 
 
-def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, blocks, pipelist):
+def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, blocks, pipelist, flowers, stars):
    # screen.fill([0, 255, 0])
     mario.blitme()
 
@@ -100,9 +104,19 @@ def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, 
     #     flag.blitme()
 
     for block in blocks:
+        # collision = pygame.sprite.collide_rect(mario, block)
+        # if collision:
+        #    block.kill()
         block.mario_collision()
-        block.blitme()
 
 
+    for flower in flowers:
+        flower.mario_collision()
+        flower.blitme()
+
+
+    for star in stars:
+        star.mario_collision()
+        star.blitme()
 
     pygame.display.flip()

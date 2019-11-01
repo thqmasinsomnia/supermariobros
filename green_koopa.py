@@ -132,7 +132,9 @@ class Green_Koopa(Sprite):
                     oof = True
 
                 if not self.dead:
-                    if oof and self.grace > 30:
+                    if oof and self.mario.is_star:
+                        self.kill()
+                    elif oof and self.grace > 30:
                         if not self.mario.is_big:
                             pygame.mixer.music.load('resources/audio/death.wav')
                             pygame.mixer.music.play(1)

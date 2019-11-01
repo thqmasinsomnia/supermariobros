@@ -50,6 +50,7 @@ class Mario(Sprite):
             x = Boundry(bnd.rect.x, bnd.rect.y - 34, bnd.width, bnd.height, self.screen, True)
             self.big_bd.add(x)
 
+
         # for flag in self.flg:
         #     x = Flag(flag.rect.x, flag.rect.y - 34, flag.width, flag.height, self.screen)
         #     self.flag_group.add(x)
@@ -190,6 +191,9 @@ class Mario(Sprite):
             pygame.image.load('resources/graphics/marioimgs/mario1.png'),
             pygame.image.load('resources/graphics/marioimgs/mario2.png')
         ]
+        if self.coin_count == 100:
+            self.lives += 1
+            self.coin_count = 0
 
         if self.rect.y > 500 and self.pitdeath == False and self.hit == False:
             self.death_animation()
@@ -568,6 +572,8 @@ class Mario(Sprite):
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
 
+
+
     def stop_left(self):
         # Called when the user lets off the keyboard and sets sprite to stance
         self.change_x = 0
@@ -600,9 +606,11 @@ class Mario(Sprite):
     def reset(self):
         self.lives -= 1
         self.rect.x = self.reset_x
-        self.rect.y = 450
+        self.rect.y = 300
+        self.hit = False
 
-
+    def give_coin(self):
+        self.coin_count += 1
 
     def check_for_pipe(self):
         pass

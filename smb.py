@@ -17,7 +17,8 @@ from main_menu import MainMenu
 from game_hub import GameHub
 from mushroom import Mushroom
 from pipe import Pipe
-
+from flower import Flower
+from star import Star
 
 def run_mario():
     pygame.init()
@@ -168,12 +169,6 @@ def run_mario():
 
 
 
-
-
-
-
-
-
     plats.add(ground)
     # plats.add(plat1)
     # plats.add(plat2)
@@ -182,21 +177,22 @@ def run_mario():
     koops = Group()
     goombas = Group()
 
+
     goomba1 = Goomba(500, 400, screen, plats, mario)
     goombas.add(goomba1)
     goomba2 = Goomba(200, 400, screen, plats, mario)
     goombas.add(goomba2)
 
-    # green1 = Green_Koopa(342, 400, screen, plats, mario, goombas)
-    # koops.add(green1)
-    # flygreen1 = Flying_Koopa(500, 400, screen, plats, mario, goombas)
-    # koops.add(flygreen1)
-    # flyred1 = Red_Flying_Koopa(200, 400, screen, plats, mario, goombas)
-    # koops.add(flyred1)
-    # red1 = Red_Koopa(200, 400, screen, plats, mario, goombas)
-    # koops.add(red1)
+    goomba3 = Goomba(1000, 400, screen, plats, mario)
+    goombas.add(goomba3)
+    goomba4 = Goomba(3000, 400, screen, plats, mario)
+    goombas.add(goomba4)
 
+    flowers = Group()
 
+    flower1 = Flower(200, 420, screen, plats, mario)
+
+    flowers.add(flower1)
 
     level = Levels(goombas, koops, plats2, blocks, mario)
 
@@ -217,10 +213,16 @@ def run_mario():
     game_ui = GameHub(screen, mario)  # holds game text for coins, time, etc
 
     big = Mushroom(400, 300, screen, plats, "big", mario)
+    one_up = Mushroom(500, 200, screen, plats, "one_up", mario)
 
     mushrooms = Group()
 
     mushrooms.add(big)
+    mushrooms.add(one_up)
+
+    stars = Group()
+    star1 = Star(300, 200, screen, plats, mario)
+    stars.add(star1)
 
     # Create the pipes
     pipe0 = Pipe('short', 100, screen, mario)
@@ -259,7 +261,7 @@ def run_mario():
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
 
         level.draw(screen, blocks)
-        level.draw(screen, pipe1)
+
 
         active_sprite_list.draw(screen)
         game_ui.show_ui(mario)  # show game text; time, coins, lives, etc
@@ -280,9 +282,13 @@ def run_mario():
             mush.update()
         for block in blocks:
             block.update()
+        for flower in flowers:
+            flower.update()
+        for star in stars:
+            star.update()
 
 
-        gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks, pipelist)
+        gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks, pipelist, flowers, stars)
         pygame.display.flip()
 
 

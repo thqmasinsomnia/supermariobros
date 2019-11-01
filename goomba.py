@@ -80,7 +80,9 @@ class Goomba(Sprite):
             self.squish()
 
         if not self.dead:
-            if oof:
+            if oof and self.mario.is_star:
+                self.kill()
+            elif oof:
                 pygame.mixer.music.load('resources/audio/death.wav')
                 pygame.mixer.music.play(1)
                 self.mario.death_animation()
