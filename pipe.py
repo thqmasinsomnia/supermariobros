@@ -2,16 +2,17 @@ import pygame
 from pygame.sprite import Sprite
 from pygame.sprite import Group
 
-pygame.init()
-window = pygame.display.set_mode((100, 100))
 class Pipe(Sprite):
-
-    def __init__(self, type, cent_x, screen):
+    def __init__(self, type, cent_x, screen, mario):
+        super(Pipe, self).__init__()
         self.width = 70
         self.type = type
+        self.center = cent_x
+        self.mario = mario
         self.screen = screen
+
         # use blank sprite for pipe sprite
-        self.rectangle = pygame.image.load('resources/graphics//goombaimgs/goomba1.png')
+        self.rectangle = pygame.image.load('resources/graphics/nothing.png')
         self.rectangle_rect = self.rectangle.get_rect()
 
         # if type is short
@@ -27,6 +28,8 @@ class Pipe(Sprite):
             print("Error: type of pipe loaded was not short, medium, or long")
             exit()
 
+        self.image = pygame.Surface((70, self.height)).convert()
+        self.image.fill([0, 0, 0])
         # resize the blank sprite
         self.rectangle = pygame.transform.scale(self.rectangle, (self.width, self.height))
 
@@ -52,6 +55,9 @@ class Pipe(Sprite):
     # If mario collides with the side of pipe
         # Leave his x where the collision happened instead of changing x as normal when pressing arrow
 
+    def mario_col(self):
+        if self.center - 35 < self.mario.rect.x < self.center + 35:
+            self.mario.rect.y = 450 - self.height
 
 
     def blitme(self):

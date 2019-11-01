@@ -67,12 +67,12 @@ class Levels:
 
 #        self.block_list = blocks
 
-        pipe1 = Pipe('short', 1035, screen)
-        pipe2 = Pipe('medium', 1393, screen)
-        pipe3 = Pipe('long', 1678, screen)
-        pipe4 = Pipe('long', 2071, screen)
-        pipe5 = Pipe('short', 5857, screen)
-        pipe6 = Pipe('short', 6427, screen)
+        # pipe1 = Pipe('short', 1035, screen)
+        # pipe2 = Pipe('medium', 1393, screen)
+        # pipe3 = Pipe('long', 1678, screen)
+        # pipe4 = Pipe('long', 2071, screen)
+        # pipe5 = Pipe('short', 5857, screen)
+        # pipe6 = Pipe('short', 6427, screen)
 
 
 

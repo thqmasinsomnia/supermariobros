@@ -53,43 +53,26 @@ def run_mario():
     stairset3 = Boundry(4856, 338, 72, 36, screen, True)
     stairset4 = Boundry(4892, 303, 36, 36, screen, True)
 
-
-
     screen = pygame.display.set_mode((500, 500))
     pygame.display.set_caption("SUPER MARIO BRUHS")
     # screen.fill([0, 255, 0])
 
-
-    #ground = Boundry(0, 450, 7571, 200, screen, True)
+    # ground = Boundry(0, 450, 7571, 200, screen, True)
     # plat1 = Boundry(0, 100, 100, 25, screen, False)
     # plat2 = Boundry(100, 200, 100, 25, screen, False)
     # plat3 = Boundry(200, 300, 100, 25, screen, False)
-
-
 
     plats.add(ground)
     plats.add(ground2)
     plats.add(ground3)
     plats.add(ground4)
 
-
-
-
-
-
-
-
     mario = Mario(0, 100, screen, plats)
-
-
-
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(200, 400, screen, plats, mario)
 
-
-
-    block = Blocks(screen, 256, 236, 32, 32, True, mario)
+    block = Blocks(screen, 256, 236, 32, 32, False, mario)
 
     block.blitme()
     blocks = Group()
@@ -113,7 +96,6 @@ def run_mario():
     redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
     koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
 
-
     # koops.add(koop1)
     # koops.add(koop2)
     # koops.add(fly1)
@@ -124,24 +106,19 @@ def run_mario():
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(100, 300, screen, plats, mario)
 
-
     goombas = Group()
     green_koopas = Group()
-    #koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas)
+    # koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas)
 
-
-    #goombas.add(goomba2)
+    # goombas.add(goomba2)
     green_koopas.add(koop1)
 
-
     level = Levels(goombas, koops, plats, blocks, mario)
-
 
     active_sprite_list = pygame.sprite.Group()
     active_sprite_list.add(mario)
 
-
-    #mario.blitme()
+    # mario.blitme()
 
     coin1 = Coin(200, 300, screen, plats, mario)
     coins = Group()
@@ -150,10 +127,9 @@ def run_mario():
 
     clock = pygame.time.Clock()
 
-
     clock = pygame.time.Clock()
 
-    game_ui = GameHub(screen, mario)   # holds game text for coins, time, etc
+    game_ui = GameHub(screen, mario)  # holds game text for coins, time, etc
 
     big = Mushroom(400, 300, screen, plats, "one_up", mario)
 
@@ -162,15 +138,24 @@ def run_mario():
     mushrooms.add(big)
 
     # Create the pipes
-    pipe0 = Pipe('short', 100, screen)
-    pipe1 = Pipe('short', 1035, screen)
-    pipe2  = Pipe('medium', 1393, screen)
-    pipe3 = Pipe('long', 1678, screen)
-    pipe4 = Pipe('long', 2071, screen)
-    pipe5 = Pipe('short', 5857, screen)
-    pipe6 = Pipe('short', 6427, screen)
+    pipe0 = Pipe('short', 100, screen, mario)
+    pipe1 = Pipe('short', 1035, screen, mario)
+    pipe2 = Pipe('medium', 1393, screen, mario)
+    pipe3 = Pipe('long', 1678, screen, mario)
+    pipe4 = Pipe('long', 2071, screen, mario)
+    pipe5 = Pipe('short', 5857, screen, mario)
+    pipe6 = Pipe('short', 6427, screen, mario)
 
-    pipelist = [pipe1, pipe2, pipe3, pipe4, pipe5, pipe6]
+    pipelist = Group()
+
+    pipelist.add(pipe0)
+    pipelist.add(pipe1)
+    pipelist.add(pipe2)
+    pipelist.add(pipe3)
+    pipelist.add(pipe4)
+    pipelist.add(pipe5)
+    pipelist.add(pipe6)
+
 
     while True:
         gf.check_events(mario)
@@ -178,20 +163,19 @@ def run_mario():
 
         pipe1.blitme()
 
-        #gf.update_screen(screen, boundries, mario)
+        # gf.update_screen(screen, boundries, mario)
 
         # Update the player.
         active_sprite_list.update()
 
         # Update items in the level
         level.update()
-        #If the player gets near the right side, shift the world left (-x)
+        # If the player gets near the right side, shift the world left (-x)
         if mario.rect.right >= 300:
             print("Mario rect.right: ", mario.rect.right)
             diff = mario.rect.right - 300
             mario.rect.right = 300
             level.shift_world(-diff)
-
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
 
@@ -200,7 +184,7 @@ def run_mario():
         level.draw(screen, pipe1)
 
         active_sprite_list.draw(screen)
-        game_ui.show_ui(mario)   # show game text; time, coins, lives, etc
+        game_ui.show_ui(mario)  # show game text; time, coins, lives, etc
         clock.tick(60)
 
         # Go ahead and update the screen with what we've draw.
@@ -219,7 +203,9 @@ def run_mario():
         for block in blocks:
             block.update()
 
+
         gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks, pipelist)
         pygame.display.flip()
+
 
 run_mario()
