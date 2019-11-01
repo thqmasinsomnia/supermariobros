@@ -101,4 +101,4 @@ class Levels:
             enemy.rect.x = shift_x
 
         for block in self.block_list:
-            block.rect.x = shift_x
+            block.rect.x += shift_x

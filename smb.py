@@ -74,16 +74,103 @@ def run_mario():
     plats.add(stairset3)
     plats.add(stairset4)
 
-
     mario = Mario(0, 100, screen, plats)
 
+    q_block1 = Blocks(screen, 256, 300, 32, 32, True, mario)
+    block1 = Blocks(screen, 369, 300, 32, 32, False, mario)
+    q_block2 = Blocks(screen, 401, 300, 32, 32, True, mario)
+    block2 = Blocks(screen, 433, 300, 32, 32, False, mario)
+    q_block3 = Blocks(screen, 465, 300, 32, 32, True, mario)
+    block3 = Blocks(screen, 497, 300, 32, 32, False, mario)
+    q_block4 = Blocks(screen, 433, 187, 32, 32, True, mario)
+    q_block5 = Blocks(screen, 2348, 300, 32, 32, True, mario)
+    block4 = Blocks(screen, 2800, 300, 32, 32, False, mario)
+    q_block6 = Blocks(screen, 2832, 300, 32, 32, True, mario)
+    block5 = Blocks(screen, 2864, 300, 32, 32, False, mario)
+    block6 = Blocks(screen, 2897, 187, 32, 32, False, mario)
+    block7 = Blocks(screen, 2929, 187, 32, 32, False, mario)
+    block8 = Blocks(screen, 2961, 187, 32, 32, False, mario)
+    block9 = Blocks(screen, 2993, 187, 32, 32, False, mario)
+    block10 = Blocks(screen, 3025, 187, 32, 32, False, mario)
+    block11 = Blocks(screen, 3057, 187, 32, 32, False, mario)
+    block12 = Blocks(screen, 3089, 187, 32, 32, False, mario)
+    block13 = Blocks(screen, 3187, 187, 32, 32, False, mario)
+    block14 = Blocks(screen, 3219, 187, 32, 32, False, mario)
+    block15 = Blocks(screen, 3251, 187, 32, 32, False, mario)
+    q_block7 = Blocks(screen, 3283, 187, 32, 32, True, mario)
+    block16 = Blocks(screen, 3283, 300, 32, 32, False, mario)
+    block17 = Blocks(screen, 3443, 300, 32, 32, False, mario)
+    q_block8 = Blocks(screen, 3475, 300, 32, 32, True, mario)
+    q_block9 = Blocks(screen, 3605, 300, 32, 32, True, mario)
+    q_block10 = Blocks(screen, 3671, 300, 32, 32, True, mario)
+    q_block11 = Blocks(screen, 3671, 187, 32, 32, True, mario)
+    q_block12 = Blocks(screen, 3736, 300, 32, 32, True, mario)
+    block18 = Blocks(screen, 3898, 300, 32, 32, False, mario)
+    block19 = Blocks(screen, 3964, 187, 32, 32, False, mario)
+    block20 = Blocks(screen, 3996, 187, 32, 32, False, mario)
+    block21 = Blocks(screen, 4028, 187, 32, 32, False, mario)
+    block22 = Blocks(screen, 4238, 187, 32, 32, False, mario)
+    q_block13 = Blocks(screen, 4270, 187, 32, 32, True, mario)
+    q_block14 = Blocks(screen, 4302, 187, 32, 32, True, mario)
+    block23 = Blocks(screen, 4334, 187, 32, 32, False, mario)
+    block24 = Blocks(screen, 4270, 300, 32, 32, False, mario)
+    block25 = Blocks(screen, 4302, 300, 32, 32, False, mario)
+    block26 = Blocks(screen, 5986, 300, 32, 32, False, mario)
+    block27 = Blocks(screen, 6018, 300, 32, 32, False, mario)
+    q_block15 = Blocks(screen, 6050, 300, 32, 32, True, mario)
+    block28 = Blocks(screen, 6082, 300, 32, 32, False, mario)
 
-
-    block = Blocks(screen, 256, 236, 32, 32, False, mario)
-
-    block.blitme()
     blocks = Group()
-    blocks.add(block)
+
+    blocks.add(q_block1)
+    blocks.add(block1)
+    blocks.add(q_block2)
+    blocks.add(block2)
+    blocks.add(q_block3)
+    blocks.add(block3)
+    blocks.add(q_block4)
+    blocks.add(q_block5)
+    blocks.add(block4)
+    blocks.add(q_block6)
+    blocks.add(block5)
+    blocks.add(block6)
+    blocks.add(block7)
+    blocks.add(block8)
+    blocks.add(block9)
+    blocks.add(block10)
+    blocks.add(block11)
+    blocks.add(block12)
+    blocks.add(block13)
+    blocks.add(block14)
+    blocks.add(block15)
+    blocks.add(q_block7)
+    blocks.add(block16)
+    blocks.add(block17)
+    blocks.add(q_block8)
+    blocks.add(q_block9)
+    blocks.add(q_block10)
+    blocks.add(q_block11)
+    blocks.add(q_block12)
+    blocks.add(block18)
+    blocks.add(block19)
+    blocks.add(block20)
+    blocks.add(block21)
+    blocks.add(block22)
+    blocks.add(q_block13)
+    blocks.add(q_block14)
+    blocks.add(block23)
+    blocks.add(block24)
+    blocks.add(block25)
+    blocks.add(block26)
+    blocks.add(block27)
+    blocks.add(q_block15)
+    blocks.add(block28)
+
+
+
+
+
+
 
 
 
@@ -96,18 +183,18 @@ def run_mario():
     goombas = Group()
 
     goomba1 = Goomba(500, 400, screen, plats, mario)
-    goomba2 = Goomba(200, 400, screen, plats, mario)
     goombas.add(goomba1)
+    goomba2 = Goomba(200, 400, screen, plats, mario)
     goombas.add(goomba2)
 
-    green1 = Green_Koopa(342, 400, screen, plats, mario, goombas)
-    koops.add(green1)
-    flygreen1 = Flying_Koopa(500, 400, screen, plats, mario, goombas)
-    koops.add(flygreen1)
-    flyred1 = Red_Flying_Koopa(200, 400, screen, plats, mario, goombas)
-    koops.add(flyred1)
-    red1 = Red_Koopa(200, 400, screen, plats, mario, goombas)
-    koops.add(red1)
+    # green1 = Green_Koopa(342, 400, screen, plats, mario, goombas)
+    # koops.add(green1)
+    # flygreen1 = Flying_Koopa(500, 400, screen, plats, mario, goombas)
+    # koops.add(flygreen1)
+    # flyred1 = Red_Flying_Koopa(200, 400, screen, plats, mario, goombas)
+    # koops.add(flyred1)
+    # red1 = Red_Koopa(200, 400, screen, plats, mario, goombas)
+    # koops.add(red1)
 
 
 
@@ -155,7 +242,7 @@ def run_mario():
 
         pipe1.blitme()
 
-        # gf.update_screen(screen, boundries, mario)
+
 
         # Update the player.
         active_sprite_list.update()
@@ -172,7 +259,6 @@ def run_mario():
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
 
         level.draw(screen, blocks)
-
         level.draw(screen, pipe1)
 
         active_sprite_list.draw(screen)
