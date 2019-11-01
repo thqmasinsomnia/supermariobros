@@ -60,35 +60,38 @@ def run_mario():
     # screen.fill([0, 255, 0])
 
 
-    ground = Boundry(0, 450, 7571, 200, screen, True)
+    #ground = Boundry(0, 450, 7571, 200, screen, True)
     # plat1 = Boundry(0, 100, 100, 25, screen, False)
     # plat2 = Boundry(100, 200, 100, 25, screen, False)
     # plat3 = Boundry(200, 300, 100, 25, screen, False)
 
 
 
-    ground.blitme()
-
-    #pygame.display.flip()
-
-    plats = Group()
-
     plats.add(ground)
+    plats.add(ground2)
+    plats.add(ground3)
+    plats.add(ground4)
 
 
 
 
-    mario = Mario(0, 400, screen, plats)
+
+
+
+
+    mario = Mario(0, 100, screen, plats)
+
+
 
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(200, 400, screen, plats, mario)
 
-    mario = Mario(100, 400, screen, plats)
+
 
     block = Blocks(screen, 256, 236, 32, 32, True, mario)
 
-    #block.blitme()
+    block.blitme()
     blocks = Group()
     blocks.add(block)
 
@@ -111,12 +114,12 @@ def run_mario():
     koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
 
 
-    koops.add(koop1)
-    koops.add(koop2)
-    koops.add(fly1)
-    koops.add(redfly1)
+    # koops.add(koop1)
+    # koops.add(koop2)
+    # koops.add(fly1)
+    # koops.add(redfly1)
 
-    goombas.add(goomba2)
+    # goombas.add(goomba2)
 
     goomba1 = Goomba(500, 0, screen, plats, mario)
     goomba2 = Goomba(100, 300, screen, plats, mario)
@@ -127,7 +130,7 @@ def run_mario():
     #koop1 = Green_Koopa(200, 300, screen, plats, mario, goombas)
 
 
-    goombas.add(goomba2)
+    #goombas.add(goomba2)
     green_koopas.add(koop1)
 
 
@@ -215,6 +218,7 @@ def run_mario():
             mush.update()
         for block in blocks:
             block.update()
+
         gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks, pipelist)
         pygame.display.flip()
 

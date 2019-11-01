@@ -65,7 +65,7 @@ class Levels:
         screen.blit(self.background, (self.world_shift, 0))
 
 
-        self.block_list = blocks
+#        self.block_list = blocks
 
         pipe1 = Pipe('short', 1035, screen)
         pipe2 = Pipe('medium', 1393, screen)

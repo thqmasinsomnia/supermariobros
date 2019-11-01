@@ -74,9 +74,9 @@ def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, 
    # screen.fill([0, 255, 0])
     mario.blitme()
 
-    for pipe in pipelist:
-        pipe.blitme()
-        pipelist.blitme()
+    # for pipe in pipelist:
+    #     pipe.blitme()
+    #     pipelist.blitme()
 
     for bound in boundries:
         bound.blitme()
