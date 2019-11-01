@@ -27,14 +27,17 @@ class Blocks(Sprite):
     def update(self):
         self.rect.x = self.x
 
+    def get_pos(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
 
     def mario_collision(self):
 
-        print(self.y)
-        print("m: " + str(self.mario.rect.y))
-        if self.rect.y + 32 == self.mario.rect.y + 4 and self.mario.rect.x in range(self.rect.x, self.rect.x + 32):
+        print("block y: " + str(self.y))
+        print("mario y: " + str(self.mario.rect.y))
+        if self.rect.y + 32 == self.mario.rect.y + 4 and self.mario.rect.x in range(self.rect.x, self.rect.x + 33):
             if self.q_block:
-                self.mario.rect.y = self.rect.y + 33
+                self.mario.rect.y = self.rect.y
                 self.mario.jumpcount = 0
                 self.mario.injump = False
                 self.image = pygame.image.load("resources/graphics/blocks/block1_hit.png")

@@ -53,7 +53,7 @@ class Levels:
 
         # Keep track of the shift amount
         self.world_shift = shift_x
-        print(self.world_shift)
+        #print(self.world_shift)
 
         # Go through all the sprite lists and shift
         for platform in self.platform_list:
