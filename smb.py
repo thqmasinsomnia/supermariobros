@@ -20,8 +20,14 @@ from pipe import Pipe
 from flower import Flower
 from star import Star
 
+
+
 def run_mario():
     pygame.init()
+
+    pygame.mixer.music.load("resources/audio/main_theme.ogg")
+    pygame.mixer.music.play(-1)
+
     gf = game_functions
 
     screen = pygame.display.set_mode((500, 500))
@@ -235,8 +241,14 @@ def run_mario():
 
     pipelist = Group()
 
-
-
+    # koop1 = Green_Koopa(1000, 300, screen, plats, mario, koops)
+    # fly1 = Flying_Koopa(200, 300, screen, plats, mario, goombas)
+    # redfly1 = Red_Flying_Koopa(300, 400, screen, plats, mario, goombas)
+    # koop2 = Red_Koopa(0, 0, screen, plats, mario, goombas)
+    # koops.add(koop1)
+    # koops.add(koop2)
+    # koops.add(fly1)
+    # koops.add(redfly1)
 
     while True:
         gf.check_events(mario)
