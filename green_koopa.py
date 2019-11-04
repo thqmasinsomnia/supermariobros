@@ -35,7 +35,7 @@ class Green_Koopa(Sprite):
             pygame.transform.flip(pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_2.png'), True,
                                   False)
         ]
-        self.walkcounter = 0;
+        self.walkcounter = 0
 
     def update(self):
 
@@ -58,14 +58,14 @@ class Green_Koopa(Sprite):
                 self.moving_right = False
             self.rect.centerx = self.center
 
-            if self.moving_left == True:
+            if self.moving_left:
                 if self.walkcounter == 20:
                     self.image = self.frames_l[0]
                 elif self.walkcounter == 40:
                     self.image = self.frames_l[1]
                     self.walkcounter = 0
 
-            if self.moving_right == True:
+            if self.moving_right:
                 if self.walkcounter == 20:
                     self.image = self.frames_r[0]
                 elif self.walkcounter == 40:
@@ -78,7 +78,6 @@ class Green_Koopa(Sprite):
             self.grace += 1
 
         if self.isshell and self.movingshell:
-
 
             hits = pygame.sprite.spritecollide(self, self.bd, False)
             if self.moving_right and self.rect.right < 7000:
@@ -98,75 +97,67 @@ class Green_Koopa(Sprite):
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
-
     def mario_collision(self):
 
         if not self.isshell:
-                col = False
+            col = False
+            if self.mario.is_big:
+                if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < \
+                        self.rect.x + 32:
+                    col = True
+            elif not self.mario.is_big:
+                if self.rect.y >= self.mario.rect.y + 30 > self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < \
+                        self.rect.x + 32:
+                    col = True
 
-                oof = False
-                oof = pygame.sprite.collide_rect(self, self.mario)
-                if self.mario.is_big:
-                    if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
-                        col = True
-                elif not self.mario.is_big:
-                    if self.rect.y >= self.mario.rect.y + 30 > self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < self.rect.x + 32:
-                        col = True
+            if col:
+                self.image = pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_shell.png')
+                big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
+                pygame.mixer.Sound.play(big_sfx)
+                self.mario.score += 100
 
+                self.walkcounter = 100
+                self.moving_left = False
+                self.moving_right = False
+                self.dead = True
+                self.isshell = True
 
+            oof = pygame.sprite.collide_rect(self, self.mario)
+            if self.mario.is_big and self.rect.x < self.mario.rect.x < self.rect.x + 32:
+                oof = True
 
-                if col:
-                    self.image = pygame.image.load('resources/graphics/green_koopaimgs/green_koopa_shell.png')
-                    big_sfx = pygame.mixer.Sound("resources/sounds/stomp.ogg")
-                    pygame.mixer.Sound.play(big_sfx)
-                    self.mario.score += 100
-
-                    self.walkcounter = 100
-                    self.moving_left = False
-                    self.moving_right = False
-                    self.dead = True
-                    self.isshell = True
-
-                oof = pygame.sprite.collide_rect(self, self.mario)
-                if self.mario.is_big and self.rect.x < self.mario.rect.x < self.rect.x + 32:
-                    oof = True
-
-                if not self.dead:
-                    if oof and self.mario.is_star:
-                        self.kill()
-                    elif oof and self.grace > 30:
-                        if not self.mario.is_big:
-                            pygame.mixer.music.load('resources/audio/death.wav')
-                            pygame.mixer.music.play(1)
-                            self.mario.death_animation()
-                        elif self.mario.is_big:
-                            self.mario.make_small()
-                            self.grace = 0
-                    else:
-                        self.grace += 1
-
-                    if oof:
-                        print("OOOOF")
+            if not self.dead:
+                if oof and self.mario.is_star:
+                    self.kill()
+                elif oof and self.grace > 30:
+                    if not self.mario.is_big:
                         pygame.mixer.music.load('resources/audio/death.wav')
                         pygame.mixer.music.play(1)
                         self.mario.death_animation()
+                    elif self.mario.is_big:
+                        self.mario.make_small()
+                        self.grace = 0
+                else:
+                    self.grace += 1
+
+                if oof:
+                    print("OOOOF")
+                    pygame.mixer.music.load('resources/audio/death.wav')
+                    pygame.mixer.music.play(1)
+                    self.mario.death_animation()
 
         else:
 
             oof = pygame.sprite.collide_rect(self, self.mario)
 
-
-            if oof and self.movingshell == False:
+            if oof and not self.movingshell:
                 self.movingshell = True
                 self.moving_left = True
 
-
             if oof and self.movingshell and self.grace > 20:
-
                 pygame.mixer.music.load('resources/audio/death.wav')
                 pygame.mixer.music.play(1)
                 self.mario.death_animation()
-
 
     def goomba_collisions(self):
 
@@ -175,6 +166,3 @@ class Green_Koopa(Sprite):
                 oof = pygame.sprite.collide_rect(self, goomba)
                 if oof:
                     goomba.squish()
-
-
-

@@ -31,7 +31,7 @@ class Mario(Sprite):
         self.acc = vec(0, 0)
         self.injump = False
         self.jumpcount = 0
-        self.is_big = False  #Is big
+        self.is_big = False  # Is big
         self.big_bd = Group()
         # self.flag_group = Group()
         self.lives = 3
@@ -50,13 +50,12 @@ class Mario(Sprite):
             x = Boundry(bnd.rect.x, bnd.rect.y - 34, bnd.width, bnd.height, self.screen, True)
             self.big_bd.add(x)
 
-
         # for flag in self.flg:
         #     x = Flag(flag.rect.x, flag.rect.y - 34, flag.width, flag.height, self.screen)
         #     self.flag_group.add(x)
 
         """Mario animation sprite lists for L and R"""
-        self.change_x = 0;
+        self.change_x = 0
         self.walking_frames_r = [
             # small stance
             pygame.image.load('resources/graphics/marioimgs/mario.png'),
@@ -187,15 +186,12 @@ class Mario(Sprite):
         pygame.mixer.Sound.play(big_sfx)
 
     def update(self):
-        li = [
-            pygame.image.load('resources/graphics/marioimgs/mario1.png'),
-            pygame.image.load('resources/graphics/marioimgs/mario2.png')
-        ]
+
         if self.coin_count == 100:
             self.lives += 1
             self.coin_count = 0
 
-        if self.rect.y > 500 and self.pitdeath == False and self.hit == False:
+        if self.rect.y > 500 and not self.pitdeath and self.hit == False:
             self.death_animation()
             self.hit = True
             pygame.mixer.music.load('resources/audio/death.wav')
@@ -225,7 +221,7 @@ class Mario(Sprite):
                 self.big_mario()
             # Fire Mario
             if self.is_big and self.is_lit and not self.is_star:
-               self.fire_mario()
+                self.fire_mario()
             if self.is_star:
                 self.star_mario()
         if self.is_star:
@@ -234,62 +230,6 @@ class Mario(Sprite):
                 self.is_star = False
                 self.big_mario()
             self.star_counter += 1
-
-    def jump(self):
-        self.rect.x += 1
-        on_plat = pygame.sprite.spritecollide(self, self.bd, False)
-        on_big_plat = pygame.sprite.spritecollide(self, self.big_bd, False)
-        self.rect.x += 1
-
-        if not self.is_big and not self.is_lit and not self.is_star:
-            if on_plat:
-                print("jump!")
-                self.injump = True
-                jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
-                pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario_jump.png')
-
-        elif self.is_big and not self.is_lit and not self.is_star:
-            if on_big_plat:
-                print("big jump!")
-                self.injump = True
-                jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
-                pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
-        elif self.is_lit:
-            if on_big_plat:
-                print("lit jump")
-                self.injump = True
-                jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
-                pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
-        elif self.is_star:
-            if on_big_plat:
-                print("star jump")
-                self.injump = True
-                jump_sfx = pygame.mixer.Sound("resources/audio/jump.ogg")
-                pygame.mixer.Sound.play(jump_sfx)
-                self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
-
-    def stop_left(self):
-        # Called when the user lets off the keyboard and sets sprite to stance
-        self.change_x = 0
-        if not self.is_big and not self.is_lit and not self.is_star:
-            self.image = self.walking_frames_l[0]
-        elif self.is_big and not self.is_lit and not self.is_star:
-            self.image = self.big_walking_frames_l[0]
-        elif self.is_lit:
-            self.image = self.lit_walking_frames_l[0]
-
-    def stop_right(self):
-        # Called when the user lets off the keyboard and sets sprite to stance
-        self.change_x = 0
-        if not self.is_big and not self.is_lit and not self.is_star:
-            self.image = self.walking_frames_r[0]
-        elif self.is_big and not self.is_lit and not self.is_star:
-            self.image = self.big_walking_frames_r[0]
-        elif self.is_lit:
-            self.image = self.lit_walking_frames_r[0]
 
     def death_animation(self):
         self.reset_x = self.rect.x
@@ -362,9 +302,6 @@ class Mario(Sprite):
                             col = pygame.sprite.collide_rect(self, bnd)
                             if col:
                                 self.rect.y = bnd.rect.y - 30
-
-
-
 
     def big_mario(self):
         if self.is_big and not self.is_lit and not self.is_star:
@@ -572,8 +509,6 @@ class Mario(Sprite):
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario1_jump.png')
                     self.image = pygame.image.load('resources/graphics/marioimgs/mario2_jump.png')
 
-
-
     def stop_left(self):
         # Called when the user lets off the keyboard and sets sprite to stance
         self.change_x = 0
@@ -594,7 +529,6 @@ class Mario(Sprite):
             self.image = self.big_walking_frames_r[0]
         elif self.is_lit:
             self.image = self.lit_walking_frames_r[0]
-
 
     def wall_col(self):
         for bound in self.bd:

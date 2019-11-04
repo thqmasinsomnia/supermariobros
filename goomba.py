@@ -27,7 +27,7 @@ class Goomba(Sprite):
             pygame.image.load('resources/graphics/goombaimgs/goomba2.png'),
             pygame.image.load('resources/graphics/goombaimgs/goomba3.png'),
         ]
-        self.walkcounter = 0;
+        self.walkcounter = 0
 
     def update(self):
         hits = pygame.sprite.spritecollide(self, self.bd, False)
@@ -67,13 +67,13 @@ class Goomba(Sprite):
         col = False
         oof = pygame.sprite.collide_rect(self, self.mario)
 
-
-
         if self.mario.is_big:
-            if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x < self.rect.x + 32:
+            if self.rect.y >= self.mario.rect.y + 64 > self.rect.y - 5 and self.rect.x < self.mario.rect.x <\
+                    self.rect.x + 32:
                 col = True
         elif not self.mario.is_big:
-            if self.rect.y >= self.mario.rect.y + 30 >= self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < self.rect.x + 32:
+            if self.rect.y >= self.mario.rect.y + 30 >= self.rect.y - 10 and self.rect.x - 32 < self.mario.rect.x < \
+                    self.rect.x + 32:
                 col = True
 
         if col:

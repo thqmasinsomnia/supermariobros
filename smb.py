@@ -300,7 +300,7 @@ def run_mario():
             star.update()
 
 
-        gf.update_screen(screen, plats, mario, goombas, koops, coins, mushrooms, blocks, pipelist, flowers, stars)
+        gf.update_screen(plats, mario, goombas, koops, coins, mushrooms, blocks, flowers, stars)
         pygame.display.flip()
 
 

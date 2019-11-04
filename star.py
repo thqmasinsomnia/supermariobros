@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 #    pygame.image.load('resources/graphics/goombaimgs/green_koopa_shell.png'),
 class Star(Sprite):
     def __init__(self, x, y, screen, boundries, mario):
@@ -32,7 +33,6 @@ class Star(Sprite):
         self.jump()
         self.jumpdate()
 
-
         hits = pygame.sprite.spritecollide(self, self.bd, False)
         if self.moving_right and self.rect.right < 7000:
             self.center += 1
@@ -48,7 +48,6 @@ class Star(Sprite):
             self.moving_right = False
         self.rect.centerx = self.center
 
-
         if self.walkcounter == 20:
             self.image = self.frame[0]
         elif self.walkcounter == 40:
@@ -59,15 +58,10 @@ class Star(Sprite):
             self.image = self.frame[3]
             self.walkcounter = 0
 
-
-
         self.walkcounter += 1
-
-
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
-
 
     def mario_collision(self):
 
@@ -78,14 +72,10 @@ class Star(Sprite):
             self.mario.make_star()
             self.kill()
 
-
-
-
-
     def jump(self):
         self.rect.x += 1
         on_plat = pygame.sprite.spritecollide(self, self.bd, False)
-        self.rect.x +=1
+        self.rect.x += 1
 
         if not self.injump:
             if on_plat:

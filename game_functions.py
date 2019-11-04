@@ -59,7 +59,6 @@ def check_keyup_events(event, mario):
             else:
                 mario.image = pygame.image.load('resources/graphics/marioimgs/mario2.png')
 
-
     # if event.type == pygame.KEYUP:
     #     if event.key == pygame.K_LEFT and mario.change_x < 0:
     #         mario.stop()
@@ -67,15 +66,15 @@ def check_keyup_events(event, mario):
     #         mario.stop()
 
 
-#Box Collide Function
-def check_box_collision(screen, blocks, mario):
+# Box Collide Function
+def check_box_collision(blocks, mario):
     collisions = pygame.sprite.groupcollide(mario, blocks, True, True)
     if collisions:
         blocks.image = pygame.image.load("resources/graphics/nothing.png")
 
 
-def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, blocks, pipelist, flowers, stars):
-   # screen.fill([0, 255, 0])
+def update_screen(boundries, mario, goombas, koopas, coins, mushrooms, blocks, flowers, stars):
+    # screen.fill([0, 255, 0])
     mario.blitme()
 
     # for pipe in pipelist:
@@ -109,11 +108,9 @@ def  update_screen(screen, boundries, mario, goombas, koopas, coins, mushrooms, 
         #    block.kill()
         block.mario_collision()
 
-
     for flower in flowers:
         flower.mario_collision()
         flower.blitme()
-
 
     for star in stars:
         star.mario_collision()
